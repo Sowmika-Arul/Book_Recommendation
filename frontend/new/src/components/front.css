@@ -72,7 +72,7 @@
   
   .left-side p {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     line-height: 1.5;
     margin-bottom: 20px;
   }
@@ -111,15 +111,15 @@
   }
   
   .book1 {
-    background-image: url('../assets/images/book1.jpg'); 
+    background-image: url('../assets/images/book-1.png'); 
   }
 
   .book2 {
-    background-image: url('../assets/images/books2.jpg');
+    background-image: url('../assets/images/book-8.png');
   }
   
   .book3 {
-    background-image: url('../assets/images/book.avif');
+    background-image: url('../assets/images/book-10.png');
   }
   
   .book:hover {

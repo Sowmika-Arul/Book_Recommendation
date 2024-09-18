@@ -1,0 +1,165 @@
+/* Container */
+.books-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 40px auto; /* Ensure the container is well-centered with spacing */
+    background-color: #f9f9f9; /* Slight background for visibility */
+    border-radius: 10px; /* Soft rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    position: relative; /* To handle relative elements inside */
+}
+
+/* Search Bar Section */
+.books-search-container {
+    display: flex;
+    justify-content: center; /* Center the input and button */
+    flex-wrap: wrap; /* Ensure elements wrap on smaller screens */
+    margin-bottom: 30px; /* Space between search bar and book results */
+}
+
+/* Input */
+.books-search-input {
+    padding: 12px;
+    margin-right: 10px;
+    width: 70%; /* Use a flexible width to adapt to screen size */
+    max-width: 300px; /* Prevent the input from being too large */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for input */
+    transition: border-color 0.3s ease;
+}
+
+.books-search-input:focus {
+    border-color: #4CAF50; /* Highlight on focus */
+    outline: none;
+}
+
+/* Button */
+.books-search-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Ensure spacing below button */
+}
+
+.books-search-button:hover {
+    background-color: #45a049;
+}
+
+/* Loading and Error */
+.books-loading,
+.books-error,
+.books-no-results {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ff0000;
+    text-align: center;
+}
+
+/* Header */
+.books-header {
+    margin-top: 40px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+/* Book List */
+/* Book List - Hide Scrollbar but Enable Scrolling */
+.books-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 500px; /* Limit height for scrolling */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    padding-right: 10px; /* Space between scrollbar and content */
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.books-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.books-list {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Book Item */
+.books-item {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px; /* Soft rounded corners for items */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.books-item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Book Cover */
+.books-cover {
+    width: 100px;
+    height: 150px;
+    margin-right: 20px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow to book covers */
+}
+
+/* Book Info */
+.books-info {
+    flex-grow: 1;
+    color: #333;
+}
+
+.books-info p {
+    margin: 0 0 5px; /* Proper spacing between paragraphs */
+    font-size: 16px;
+    line-height: 1.4; /* Improve readability */
+}
+
+.books-info p strong {
+    color: #4CAF50; /* Highlight book details */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .books-search-container {
+        flex-direction: column;
+        align-items: center; /* Center items vertically on small screens */
+    }
+
+    .books-search-input,
+    .books-search-button {
+        width: 100%; /* Take full width on small screens */
+        margin-bottom: 10px; /* Ensure spacing between input and button */
+    }
+
+    .books-item {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start;
+    }
+
+    .books-cover {
+        width: 80px;
+        height: 120px;
+        margin-bottom: 10px;
+    }
+
+    .books-info {
+        text-align: center;
+    }
+}

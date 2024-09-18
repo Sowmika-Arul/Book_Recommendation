@@ -1,0 +1,124 @@
+.book-list-container {
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.book-list-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 300px;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.search-button:active {
+    transform: scale(0.98);
+}
+
+.book-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.book-item {
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.book-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-color: #007bff;
+}
+
+.book-cover {
+    width: 120px;
+    height: 180px; 
+    object-fit: cover; 
+    border-bottom: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+.book-title {
+    font-size: 16px;
+    color: #333;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.book-authors {
+    font-size: 14px;
+    color: #777;
+    margin: 0 10px 10px;
+}
+
+.book-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.loading, .error, .no-books {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.loading {
+    color: #007bff;
+}
+
+.error {
+    color: #dc3545;
+}
+
+.no-books {
+    color: #6c757d;
+}
