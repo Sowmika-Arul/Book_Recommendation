@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Login.css'; 
 import imgbook from '../assets/images/book.avif';
 
 function Login() {
-  // useState to toggle between login and signup views
   const [isLogin, setIsLogin] = useState(true);
-  
-  // useState for form inputs
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isLogin ? 'http://localhost:5057/api/auth/login' : 'http://localhost:5057/api/auth/signup';
-    
+
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -40,21 +37,27 @@ function Login() {
       const result = await response.json();
       console.log('Success:', result);
 
-      // Redirect or update UI based on response
+      // Store token if available
+      if (result.token) {
+        localStorage.setItem('authToken', result.token);
+        console.log(result.token);
+      }
+
+      // Redirect to the desired page
+      navigate('/front'); // Adjust the path as needed
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-  // Toggle function
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setFormData({ name: '', email: '', password: '' }); // Reset form data on toggle
+    setFormData({ name: '', email: '', password: '' });
   };
 
   return (
+    <div className = "new">
     <div className={`login-container ${isLogin ? '' : 'reverse-layout'}`}>
-      {/* Image Section */}
       <div className="books-section">
         <img 
           src={imgbook}
@@ -63,7 +66,6 @@ function Login() {
         />
       </div>
       
-      {/* Form Section */}
       <div className="login-section">
         <form className="login-form" onSubmit={handleSubmit}>
           {isLogin ? (
@@ -142,7 +144,7 @@ function Login() {
         </form>
       </div>
     </div>
+    </div>
   );
 }
-
 export default Login;

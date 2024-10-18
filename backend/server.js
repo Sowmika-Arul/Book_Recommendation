@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors'; // Import the cors package
 import authRoutes from './routes/auth.js';
+import favoritesRoutes from './routes/favorites.js'; // Import the favorites routes
 
 // Load environment variables from .env file
 dotenv.config();
@@ -28,6 +29,9 @@ mongoose.connect(MONGO_URI, {
 
 // Use authentication routes
 app.use('/api/auth', authRoutes);
+
+// Use favorites routes
+app.use('/api', favoritesRoutes); 
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {

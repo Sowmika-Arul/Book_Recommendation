@@ -1,4 +1,8 @@
 
+body{
+  background-color: #f0f4fc;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -52,7 +56,9 @@
     display: flex;
     width: 80%; 
     margin: 0 auto; 
+    color:aquamarine;
     height: calc(100vh - 70px);
+    
   }
   
   .left-side {

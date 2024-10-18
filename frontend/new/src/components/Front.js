@@ -4,13 +4,14 @@ import './front.css';
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="logo">E-Book</div>
+      <div className="logo">Book Recommendation</div>
       <ul className="nav-links">
         <li><a href="/">Home</a></li>
-        <li><a href="/">Featured</a></li>
-        <li><a href="/">Discount</a></li>
-        <li><a href="/">New Books</a></li>
-        <li><a href="/">Testimonial</a></li>
+        <li><a href="/">Book Collection</a></li>
+        <li><a href="/award">Books of the year</a></li>
+        <li><a href="/book">New Books</a></li>
+        <li><a href="/fav">Favorites</a></li>
+        <li><a href="/fav">Testimonial</a></li>
       </ul>
       <div className="nav-icons">
         <i className="fas fa-search"></i>
@@ -26,7 +27,7 @@ const FrontPage = () => {
       <Navbar /> 
       <div className="container">
         <div className="left-side">
-          <h1>Browse &<br />Select E-Books</h1>
+          <h1>Book<br />Collection</h1>
           <p>
             Find the best e-books from your favorite writers, explore hundreds of
             books with all possible categories, take advantage of the 50% discount

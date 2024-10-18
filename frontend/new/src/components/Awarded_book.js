@@ -8,7 +8,7 @@ const AwardedBooks = () => {
   const [year, setYear] = useState('');
 
   const fetchAwardedBooks = async (year) => {
-    const API_KEY = 'ca90fb524fmsh2f7fe869b635300p19cbf5jsnd4a8503f16b1';
+    const API_KEY = 'c4901fbbf6mshe559c7655f29ebdp1fc8e3jsn44bc2a28f0a1';
 
     try {
       setLoading(true);

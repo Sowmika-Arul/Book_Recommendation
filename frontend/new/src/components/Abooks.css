@@ -1,14 +1,4 @@
 
-.awarded-books-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Input Container */
 .awarded-books-input {
   display: flex;
   flex-direction: column;
@@ -51,12 +41,10 @@
 
 
 .awarded-books-content {
-  min-height: 1300px;
-  min-width:800px; 
+  min-width:5000px; 
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
 }
 
 
@@ -65,14 +53,12 @@
   color: #ff0000;
 }
 
-
 .awarded-books-list {
   list-style: none;
   padding: 0;
   display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-  gap: 20px;
-  margin-top: 20px;
+  gap: 50px;
   justify-content: center;
 }
 

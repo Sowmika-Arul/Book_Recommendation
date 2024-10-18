@@ -21,7 +21,7 @@ const BooksByMonth = () => {
             const response = await fetch(`https://hapi-books.p.rapidapi.com/month/${query}`, {
                 method: 'GET',
                 headers: {
-                    'x-rapidapi-key': 'ca90fb524fmsh2f7fe869b635300p19cbf5jsnd4a8503f16b1',
+                    'x-rapidapi-key': 'cbc4cf5a81msh25b994c17729712p1b5accjsncf716cd62888',
                     'x-rapidapi-host': 'hapi-books.p.rapidapi.com',
                 },
             });

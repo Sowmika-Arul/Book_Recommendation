@@ -1,5 +1,5 @@
-/* Ensure the body takes up the full viewport height and centers its content */
-body {
+
+.new {
   margin: 0;
   font-family: Arial, sans-serif;
   display: flex;
@@ -12,18 +12,18 @@ body {
 .login-container {
   display: flex;
   width: 1000px; 
-  height: 500px; /* Fixed height of the container */
+  height: 500px; 
   background-color: #dc9b7b;
-  border-radius: 12px; /* Slightly increased border-radius for a smoother look */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow for better effect */
-  overflow: hidden; /* Prevent content from overflowing */
-  transition: transform 0.3s ease-in-out; /* Add a smooth transition for any layout changes */
+  border-radius: 12px; 
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  overflow: hidden; 
+  transition: transform 0.3s ease-in-out; 
 }
 
-/* Ensure both sections take up equal space */
+
 .books-section,
 .login-section {
-  flex: 1; /* Each section takes up equal space */
+  flex: 1; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,14 +35,13 @@ body {
 
 .books-img {
   width: 100%;
-  height: 100%; /* Ensure the image takes up full height */
-  object-fit: cover; /* Ensure the image covers the section without distortion */
+  height: 100%; 
+  object-fit: cover; 
 }
 
 .login-section {
   padding: 20px;
-  background-color: #fefefe; /* Add subtle background color to distinguish the form section */
-}
+  background-color: #fefefe; }
 
 .login-form {
   width: 100%;
@@ -62,24 +61,24 @@ body {
   margin-bottom: 15px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 1rem; /* Make input text more readable */
+  font-size: 1rem; 
 }
 
 .login-form button {
   width: 95%;
   padding: 12px;
-  background-color: #8B4513; /* More vibrant brown */
+  background-color: #8B4513; 
   color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
-  transition: background-color 0.3s ease; /* Smooth transition on hover */
+  transition: background-color 0.3s ease; 
 }
 
 .login-form button:hover {
-  background-color: #A0522D; /* Slightly different hover effect */
+  background-color: #A0522D; 
 }
 
 .login-form a {
@@ -91,16 +90,16 @@ body {
   font-size: 0.9rem;
 }
 
-/* Responsive Adjustments for smaller screens */
+
 @media (max-width: 768px) {
   .login-container {
-    width: 90%; /* Make the container wider on smaller screens */
-    height: auto; /* Allow height to adjust based on content */
-    flex-direction: column; /* Stack the image and form sections vertically */
+    width: 90%; 
+    height: auto; 
+    flex-direction: column; 
   }
 
   .books-section {
-    height: 200px; /* Adjust image section height on small screens */
+    height: 200px; 
   }
 
   .login-section {
@@ -108,10 +107,9 @@ body {
   }
 
   .login-form input {
-    width: 100%; /* Full width inputs on smaller screens */
+    width: 100%; 
   }
 
   .login-form button {
-    width: 100%; /* Full width button on smaller screens */
-  }
+    width: 100%;}
 }

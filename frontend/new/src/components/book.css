@@ -5,7 +5,7 @@
 
 .book-list-title {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 100px;
     text-align: center;
     color: #333;
     font-weight: bold;
@@ -78,8 +78,8 @@
 }
 
 .book-cover {
-    width: 120px;
-    height: 180px; 
+    width: 150px;
+    height: 150px; 
     object-fit: cover; 
     border-bottom: 1px solid #ddd;
     margin-top: 10px;
@@ -122,3 +122,20 @@
 .no-books {
     color: #6c757d;
 }
+
+.favorite-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .favorite-button.favorited {
+    color: gold; /* Change color to indicate the book is favorited */
+  }
+  
+  .favorite-button:not(.favorited) {
+    color: gray; /* Default color when not favorited */
+  }
+  
+  
