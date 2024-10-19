@@ -1,0 +1,107 @@
+/* feedback.css */
+
+.feedback-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff; /* Changed to white for a cleaner look */
+    border-radius: 12px; /* Slightly increased border-radius */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font for a modern feel */
+}
+
+.feedback-container h2 {
+    text-align: center;
+    color: #444; /* Slightly darker for better contrast */
+    margin-bottom: 25px; /* Increased margin for more spacing */
+    font-size: 26px; /* Slightly larger font size */
+}
+
+.feedback-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-container label {
+    font-size: 16px; /* Larger font size for readability */
+    color: #666; /* Slightly lighter for better aesthetics */
+    font-weight: bold; /* Make labels stand out */
+}
+
+.feedback-container textarea,
+.feedback-container select {
+    padding: 10px; /* Increased padding for comfort */
+    margin-bottom: 20px; /* Space between inputs */
+    border: 2px solid #ccc; /* Thicker border for more prominence */
+    border-radius: 6px; /* Increased border-radius for a softer look */
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease; /* Added transition for focus effect */
+}
+
+.feedback-container input[type="text"] {
+    padding: 10px; /* Increased padding for comfort */
+    margin-bottom: 20px; /* Space between inputs */
+    border: 2px solid #ccc; /* Thicker border for more prominence */
+    border-radius: 6px; /* Increased border-radius for a softer look */
+    font-size: 16px;
+    width: 500px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease; /* Added transition for focus effect */
+}
+.feedback-container input[type="text"]:focus,
+.feedback-container textarea:focus,
+.feedback-container select:focus {
+    border-color: #0056b3; /* Darker blue on focus */
+    outline: none;
+}
+
+.feedback-container textarea {
+    resize: vertical; /* Allow vertical resizing */
+    height: 120px; /* Slightly increased height */
+}
+
+.feedback-container button {
+    padding: 14px 24px; /* Increased padding for a larger button */
+    background-color: #0056b3; /* Darker blue for the button */
+    border: none;
+    border-radius: 6px; /* Increased border-radius */
+    color: white;
+    font-size: 18px; /* Increased font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s; /* Added transform transition */
+    display: inline-block; /* Ensures the button is treated as a block element */
+}
+
+.feedback-container button:hover {
+    background-color: #004494; /* Darker on hover */
+    transform: translateY(-2px); /* Slightly lift button on hover */
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .feedback-container {
+        width: 95%; /* Adjusted width for smaller screens */
+        padding: 15px; /* Adjusted padding */
+    }
+
+    .feedback-container h2 {
+        font-size: 22px; /* Adjusted font size for smaller screens */
+    }
+
+    .feedback-container button {
+        font-size: 16px; /* Adjusted font size for buttons */
+        padding: 12px; /* Adjusted padding */
+    }
+
+    .feedback-container input[type="text"],
+    .feedback-container textarea,
+    .feedback-container select {
+        font-size: 14px; /* Smaller font size for inputs on small screens */
+    }
+
+    .feedback-container label {
+        font-size: 14px; /* Smaller font size for labels on small screens */
+    }
+}

@@ -1,0 +1,71 @@
+/* feedbackList.css */
+
+.feedback-list-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.feedback-list-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+.feedback-item {
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: box-shadow 0.3s ease;
+}
+
+.feedback-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feedback-item h4 {
+    color: #007bff;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
+
+.feedback-item p {
+    color: #555;
+    margin: 5px 0;
+}
+
+.feedback-item p:first-of-type {
+    font-weight: bold;
+}
+
+.feedback-item p:last-of-type {
+    font-style: italic;
+}
+
+.feedback-rating {
+    color: #ffc107;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+    .feedback-list-container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .feedback-item h4 {
+        font-size: 18px;
+    }
+
+    .feedback-list-container h2 {
+        font-size: 22px;
+    }
+}

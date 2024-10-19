@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './new.css';
+import Navbar from './Navbar.js';
 
 const BooksSearch = () => {
   const [query, setQuery] = useState('');
@@ -17,7 +18,6 @@ const BooksSearch = () => {
     'Romance',
     'Fantasy',
     'Biography',
-    'Non-Fiction',
     'Self-Help',
   ];
 
@@ -67,6 +67,8 @@ const BooksSearch = () => {
   }, [selectedCategory]);
 
   return (
+    <div>
+      <Navbar/>
     <div className="book-search-container">
       <div className="sidebar">
         <h2>Categories</h2>
@@ -105,7 +107,7 @@ const BooksSearch = () => {
           {books.length > 0 &&
             books.map((book, index) => {
               const { title, authors, publisher, publishedDate, imageLinks, webReaderLink } = book.volumeInfo;
-
+              console.log(`Book ${index + 1}:`, { title, webReaderLink });
               return (
                 <div key={index} className="book-item">
                   {imageLinks && imageLinks.thumbnail && (
@@ -129,6 +131,7 @@ const BooksSearch = () => {
             })}
         </div>
       </div>
+    </div>
     </div>
   );
 };

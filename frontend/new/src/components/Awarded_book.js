@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Abooks.css'; // Updated file name
 
 const AwardedBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [year, setYear] = useState('');
+  const [year, setYear] = useState('2023'); // Default year set to 2023
 
   const fetchAwardedBooks = async (year) => {
     const API_KEY = 'c4901fbbf6mshe559c7655f29ebdp1fc8e3jsn44bc2a28f0a1';
@@ -47,9 +47,13 @@ const AwardedBooks = () => {
     }
   };
 
+  // Fetch awarded books for the default year (2023) when the component mounts
+  useEffect(() => {
+    fetchAwardedBooks(year);
+  }, [year]); // Only re-fetch when the year changes
+
   return (
     <div className="awarded-books-container">
-
       <div className="awarded-books-input">
         <label htmlFor="year">Enter Year:</label>
         <input

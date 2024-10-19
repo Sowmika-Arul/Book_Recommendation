@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
 
     const user = new User({ name, email, password });
     await user.save();
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(201).json({ message: 'User created successfully', userId: user._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -46,7 +46,8 @@ router.post('/login', async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.json({ token });
+    // Return token and user ID
+    res.json({ token, userId: user._id });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
