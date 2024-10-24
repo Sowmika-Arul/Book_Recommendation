@@ -4,24 +4,30 @@ import './Login.css';
 import imgbook from '../assets/images/book.avif';
 
 function Login() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true); // Toggle between login and sign-up form
   const [formData, setFormData] = useState({
-    name: '',
+    name: '',      // Only needed for sign-up
     email: '',
     password: ''
   });
-  const navigate = useNavigate(); 
+  const navigate = useNavigate(); // Hook for navigation
 
+  // Handle form field changes
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
+  // Handle form submission (login or sign-up)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = isLogin ? 'http://localhost:5057/api/auth/login' : 'http://localhost:5057/api/auth/signup';
+    // Choose the appropriate endpoint for login or sign-up
+    const endpoint = isLogin 
+      ? 'http://localhost:5057/api/auth/login' 
+      : 'http://localhost:5057/api/auth/signup';
 
     try {
+      // Send the request to the backend
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -34,30 +40,32 @@ function Login() {
         throw new Error('Network response was not ok');
       }
 
+      // Get the result from the backend
       const result = await response.json();
       console.log('Success:', result);
 
       // Store token and user ID if available
       if (result.token) {
-        localStorage.setItem('authToken', result.token);
+        localStorage.setItem('authToken', result.token); // Store the token
         console.log('Token:', result.token);
       }
 
       if (result.userId) {
-        localStorage.setItem('userId', result.userId); // Store user ID
+        localStorage.setItem('userId', result.userId); // Store the user ID
         console.log('User ID:', result.userId);
       }
 
-      // Redirect to the desired page
+      // Redirect to the main application after login/signup
       navigate('/front'); // Adjust the path as needed
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
+  // Toggle between login and sign-up form
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setFormData({ name: '', email: '', password: '' });
+    setFormData({ name: '', email: '', password: '' }); // Reset form data when toggling
   };
 
   return (
@@ -65,7 +73,7 @@ function Login() {
       <div className={`login-container ${isLogin ? '' : 'reverse-layout'}`}>
         <div className="books-section">
           <img 
-            src={imgbook}
+            src={imgbook} 
             alt="Books" 
             className="books-img" 
           />

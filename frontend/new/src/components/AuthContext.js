@@ -1,16 +1,24 @@
+// src/components/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Correct import
+import {jwtDecode} from 'jwt-decode';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
+  const [authToken, setAuthToken] = useState(() => localStorage.getItem('authToken'));
 
   useEffect(() => {
     if (authToken) {
-      const decoded = jwtDecode(authToken); // Use jwtDecode here
-      setUser(decoded.userId);
+      try {
+        const decoded = jwtDecode(authToken);
+        setUser(decoded.userId); // Assume the user ID is stored in the token
+      } catch (error) {
+        console.error('Failed to decode token:', error);
+        logout(); // Log out if the token is invalid
+      }
+    } else {
+      setUser(null);
     }
   }, [authToken]);
 
@@ -21,13 +29,18 @@ export const AuthProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      const result = await response.json();
-      if (response.ok) {
-        localStorage.setItem('authToken', result.token);
-        setAuthToken(result.token);
-      } else {
-        throw new Error(result.error);
+
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.error || 'Login failed');
       }
+
+      const result = await response.json();
+      localStorage.setItem('authToken', result.token); // Store token
+      setAuthToken(result.token); // Update token in state
+
+      const decoded = jwtDecode(result.token);
+      setUser(decoded.userId); // Set user based on the decoded token
     } catch (error) {
       console.error('Login error:', error);
     }
@@ -39,8 +52,10 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const isAuthenticated = Boolean(authToken); // Check if user is authenticated
+
   return (
-    <AuthContext.Provider value={{ user, authToken, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

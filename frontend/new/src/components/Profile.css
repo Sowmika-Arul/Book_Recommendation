@@ -1,0 +1,86 @@
+/* Profile.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  background-color: #f0f4f8; 
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #333; 
+  text-align: center; 
+}
+
+.profile-container {
+  display: flex; 
+  justify-content: space-between; 
+  max-width: 1200px; /* Limit max width */
+  margin: 0 auto; /* Center the profile container */
+}
+
+.profile-left, .profile-right {
+  flex: 1; /* Take equal space */
+  padding: 20px; /* Padding for inner spacing */
+  margin: 10px; /* Margin between left and right sections */
+  background-color: #ffffff; /* White background for both sections */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+}
+
+.profile-image-container {
+  display: flex; /* Use flexbox to center the image */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin-bottom: 20px; /* Space below the image */
+}
+
+.profile-pic {
+  border-radius: 50%; 
+  border: 3px solid #007bff; /* Thicker border for the image */
+  width: 150px; /* Fixed width for profile image */
+  height: 150px; /* Fixed height for profile image */
+}
+
+input[type="text"] {
+  width: 100%; /* Full width for input fields */
+  padding: 12px; /* Increased padding for comfort */
+  margin: 10px 0; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+  transition: border-color 0.2s ease; /* Smooth transition for focus */
+}
+
+
+input[type="email"] {
+  width: 93%; /* Full width for input fields */
+  padding: 12px; /* Increased padding for comfort */
+  margin: 10px 0; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+  transition: border-color 0.2s ease; /* Smooth transition for focus */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+  border-color: #007bff; 
+  outline: none; 
+}
+
+button {
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  padding: 12px 20px; /* More padding for buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 16px; /* Larger text */
+  margin-top: 10px; /* Space above the button */
+  transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+button:hover {
+  background-color: #0056b3; 
+}
