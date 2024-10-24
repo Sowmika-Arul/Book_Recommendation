@@ -1,4 +1,6 @@
+// Profile.js
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Profile.css';
 
 const Profile = () => {
@@ -6,7 +8,7 @@ const Profile = () => {
         name: '',
         email: '',
         photo: '',
-        bio: '', // Add bio field
+        bio: '',
         favoriteBooks: [],
         favoriteGenres: [],
         favoriteAuthors: [],
@@ -26,7 +28,7 @@ const Profile = () => {
                         name: data.name || '',
                         email: data.email || '',
                         photo: data.photo || '',
-                        bio: data.bio || '', // Update bio from fetched data
+                        bio: data.bio || '',
                         favoriteBooks: data.favoriteBooks || [],
                         favoriteGenres: data.favoriteGenres || [],
                         favoriteAuthors: data.favoriteAuthors || [],
@@ -102,7 +104,7 @@ const Profile = () => {
                 </div>
                 <h2>{profile.name}</h2>
                 <p><center>{profile.email}</center></p>
-                <p className="bio">{profile.bio}</p> {/* Display bio */}
+                <p className="bio">{profile.bio}</p>
                 <div className="follower-info">
                     <p><strong>Followers:</strong> {profile.followers}</p>
                     <p><strong>Following:</strong> {profile.following}</p>
@@ -170,6 +172,10 @@ const Profile = () => {
                     />
                     <button type="submit">Update Profile</button>
                 </form>
+                {/* Link to Recommendations Page */}
+                <Link to="/recommendations">
+                    <button type="button">View Recommendations</button>
+                </Link>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 // src/App.js
 import React, { useState } from 'react';
+import Recommendations from './Recommendations'; // Import Recommendations component
 import './BookReader.css'; // Updated CSS file name
 
 function App() {
@@ -7,13 +8,15 @@ function App() {
   const [bookDetails, setBookDetails] = useState(null);
   const [message, setMessage] = useState('');
 
-  const handleSearch = (event) => {
-    event.preventDefault(); // Prevent default form submission
+  // Handler to search for books based on clicked book title
+  const handleBookClick = (bookTitle) => {
+    console.log(`Book clicked: ${bookTitle}`); // Add a log to debug
+    setQuery(bookTitle); // Set query to the book title
     setMessage(''); // Clear previous messages
     setBookDetails(null); // Clear previous book details
 
     // Fetch data from Gutendex API
-    fetch(`https://gutendex.com/books?search=${encodeURIComponent(query)}`)
+    fetch(`https://gutendex.com/books?search=${encodeURIComponent(bookTitle)}`)
       .then(response => response.json())
       .then(data => {
         if (data.results.length > 0) {
@@ -21,12 +24,7 @@ function App() {
           const title = book.title;
           const authors = book.authors.map(author => author.name).join(', ');
 
-          // Check if translations exist and assign description
-          const description = (book.translations && book.translations.length > 0) 
-            ? book.translations[0].description 
-            : 'No description available.';
-
-          // Get download link for plain text format
+          const description = book.translations?.[0]?.description || 'No description available.';
           const txtUrl = book.formats['text/plain; charset=us-ascii'];
 
           setBookDetails({
@@ -36,11 +34,11 @@ function App() {
             txtUrl
           });
         } else {
-          setMessage('No books found for the search query.'); // Alert if no books found
+          setMessage('No books found for the search query.');
         }
       })
       .catch(error => {
-        console.error('Error fetching book data:', error); // Log any errors
+        console.error('Error fetching book data:', error);
         setMessage('Error fetching book data. Please try again later.');
       });
   };
@@ -48,17 +46,9 @@ function App() {
   return (
     <div className="app-container">
       <h1 className="app-title">Search for Books on Project Gutenberg</h1>
-      <form className="search-form" onSubmit={handleSearch}>
-        <input 
-          type="text" 
-          value={query} 
-          onChange={(e) => setQuery(e.target.value)} 
-          placeholder="Enter book title or author" 
-          required 
-          className="search-input"
-        />
-        <button type="submit" className="search-button">Search</button>
-      </form>
+
+      {/* Pass the handleBookClick function to Recommendations */}
+      <Recommendations userId="1" onBookClick={handleBookClick} /> {/* Pass onBookClick prop */}
 
       {bookDetails && (
         <div className="book-details">

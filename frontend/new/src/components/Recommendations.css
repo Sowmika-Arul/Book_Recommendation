@@ -1,0 +1,38 @@
+/* Recommendations.css */
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.book-card {
+    width: 200px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    margin: 10px;
+    padding: 15px;
+}
+
+.book-cover {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.book-info {
+    padding: 10px;
+}
+
+.book-info h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.book-info p {
+    font-size: 14px;
+    color: #555;
+}
