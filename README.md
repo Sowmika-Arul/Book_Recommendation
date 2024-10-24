@@ -1,13 +1,13 @@
 ## BOOK RECOMMENDATION
 
-# MODULES
+## MODULES
  - Search Module
  - Favorite Module
  - Feedback Module
  - Recommendation Module
  - Read Books Online
 
-# STACK
+## STACK
 - React
 - Node JS, Express
 - Mongo DB
