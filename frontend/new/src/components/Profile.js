@@ -108,7 +108,10 @@ const Profile = () => {
                 <div className="follower-info">
                     <p><strong>Followers:</strong> {profile.followers}</p>
                     <p><strong>Following:</strong> {profile.following}</p>
-                </div>
+                </div><br></br>
+                <center><Link to="/recommendations">
+                    <button type="button">View Recommendations</button>
+                </Link></center>
             </div>
 
             <div className="profile-right">
@@ -172,10 +175,6 @@ const Profile = () => {
                     />
                     <button type="submit">Update Profile</button>
                 </form>
-                {/* Link to Recommendations Page */}
-                <Link to="/recommendations">
-                    <button type="button">View Recommendations</button>
-                </Link>
             </div>
         </div>
     );

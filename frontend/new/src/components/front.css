@@ -71,9 +71,10 @@ body{
   
   .left-side h1 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
     margin-bottom: 20px;
+    margin-right: 200px;
   }
   
   .left-side p {

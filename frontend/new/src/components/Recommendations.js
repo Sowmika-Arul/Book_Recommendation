@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import fetchRecommendedBooks from './recommendation'; 
 import './Recommendations.css';
+import Navbar from './Navbar.js';
 
 const Recommendations = ({ userId }) => {
     const [recommendedBooks, setRecommendedBooks] = useState([]);
@@ -17,21 +18,11 @@ const Recommendations = ({ userId }) => {
                 }
                 const profileData = await res.json();
 
-                console.log('Profile data fetched:', profileData); // Log profile data
-
-                // Log user's favorite details
-                console.log('Favorite Books:', profileData.favoriteBooks);
-                console.log('Favorite Authors:', profileData.favoriteAuthors);
-                console.log('Favorite Genres:', profileData.favoriteGenres);
-                console.log('Themes:', profileData.themes);
-
                 // Fetch recommended books based on the profile
                 const books = await fetchRecommendedBooks(profileData); // Pass entire profile object
-                console.log('Recommended books fetched:', books); // Log fetched books
-
+    
                 setRecommendedBooks(books); // Update state with recommended books
             } catch (error) {
-                console.error('Error fetching recommendations:', error);
                 setError('Failed to fetch recommendations. Please try again later.'); // Set error message
             } finally {
                 setLoading(false); // Stop loading
@@ -43,6 +34,7 @@ const Recommendations = ({ userId }) => {
 
     return (
         <div>
+            <Navbar/>
             <h1>Recommended Books</h1>
             {loading ? (
                 <p>Loading recommendations...</p> // Show loading message

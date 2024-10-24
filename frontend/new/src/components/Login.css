@@ -55,8 +55,12 @@
   font-size: 1rem;
 }
 
+.login-form h2{
+color:#A0522D;
+}
+
 .login-form input {
-  width: 90%;
+  width: 350px;
   padding: 12px;
   margin-bottom: 15px;
   border: 1px solid #ddd;

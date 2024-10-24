@@ -46,7 +46,7 @@ const FeedbackForm = () => {
                 <h2>Submit Feedback</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Book Title:</label><br></br>
+                        <label>Book Title:</label>
                         <input
                             type="text"
                             name="bookTitle"
@@ -56,7 +56,7 @@ const FeedbackForm = () => {
                         />
                     </div>
                     <div>
-                        <label>Author:</label><br></br>
+                        <label>Author:</label>
                         <input
                             type="text"
                             name="author"
