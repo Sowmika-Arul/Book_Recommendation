@@ -6,10 +6,13 @@ const Profile = () => {
         name: '',
         email: '',
         photo: '',
+        bio: '', // Add bio field
         favoriteBooks: [],
         favoriteGenres: [],
         favoriteAuthors: [],
         themes: [],
+        followers: 0,
+        following: 0,
     });
 
     const [userId, setUserId] = useState(localStorage.getItem('userId') || '');
@@ -23,10 +26,13 @@ const Profile = () => {
                         name: data.name || '',
                         email: data.email || '',
                         photo: data.photo || '',
+                        bio: data.bio || '', // Update bio from fetched data
                         favoriteBooks: data.favoriteBooks || [],
                         favoriteGenres: data.favoriteGenres || [],
                         favoriteAuthors: data.favoriteAuthors || [],
                         themes: data.themes || [],
+                        followers: data.followers || 0,
+                        following: data.following || 0,
                     });
                 })
                 .catch(error => {
@@ -37,7 +43,6 @@ const Profile = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Update the state based on the input field name
         setProfile(prevProfile => ({
             ...prevProfile,
             [name]: name === 'favoriteBooks' || name === 'favoriteGenres' || name === 'favoriteAuthors' || name === 'themes'
@@ -53,7 +58,7 @@ const Profile = () => {
             reader.onloadend = () => {
                 setProfile(prevProfile => ({
                     ...prevProfile,
-                    photo: reader.result, // Set the new photo URL
+                    photo: reader.result,
                 }));
             };
             reader.readAsDataURL(file);
@@ -67,7 +72,7 @@ const Profile = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId, ...profile }), // Send the updated profile
+            body: JSON.stringify({ userId, ...profile }),
         })
         .then(res => {
             if (!res.ok) {
@@ -77,7 +82,7 @@ const Profile = () => {
         })
         .then(data => {
             alert('Profile updated!');
-            setProfile(data); // Update the local state with the new profile data
+            setProfile(data);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -87,7 +92,6 @@ const Profile = () => {
 
     return (
         <div className="profile-container">
-            {/* Left Side: Profile Picture, Name, Email */}
             <div className="profile-left">
                 <div className="profile-image-container">
                     {profile.photo ? (
@@ -97,10 +101,14 @@ const Profile = () => {
                     )}
                 </div>
                 <h2>{profile.name}</h2>
-                <p>{profile.email}</p>
+                <p><center>{profile.email}</center></p>
+                <p className="bio">{profile.bio}</p> {/* Display bio */}
+                <div className="follower-info">
+                    <p><strong>Followers:</strong> {profile.followers}</p>
+                    <p><strong>Following:</strong> {profile.following}</p>
+                </div>
             </div>
 
-            {/* Right Side: Form for Name, Email, Favorite Details and Profile Picture */}
             <div className="profile-right">
                 <form onSubmit={handleSubmit}>
                     <h1>Profile Details</h1>
@@ -108,14 +116,21 @@ const Profile = () => {
                         type="text"
                         name="name"
                         placeholder="Name"
-                        value={profile.name} // Bind the name input to the profile state
+                        value={profile.name}
                         onChange={handleChange}
                     />
                     <input
                         type="email"
                         name="email"
                         placeholder="Email"
-                        value={profile.email} // Bind the email input to the profile state
+                        value={profile.email}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        name="bio"
+                        placeholder="Bio"
+                        value={profile.bio}
                         onChange={handleChange}
                     />
                     <input
@@ -129,28 +144,28 @@ const Profile = () => {
                         type="text"
                         name="favoriteBooks"
                         placeholder="Favorite Books (comma separated)"
-                        value={profile.favoriteBooks.join(', ')} // Display current favorite books
+                        value={profile.favoriteBooks.join(', ')}
                         onChange={handleChange}
                     />
                     <input
                         type="text"
                         name="favoriteGenres"
                         placeholder="Favorite Genres (comma separated)"
-                        value={profile.favoriteGenres.join(', ')} // Display current favorite genres
+                        value={profile.favoriteGenres.join(', ')}
                         onChange={handleChange}
                     />
                     <input
                         type="text"
                         name="favoriteAuthors"
                         placeholder="Favorite Authors (comma separated)"
-                        value={profile.favoriteAuthors.join(', ')} // Display current favorite authors
+                        value={profile.favoriteAuthors.join(', ')}
                         onChange={handleChange}
                     />
                     <input
                         type="text"
                         name="themes"
                         placeholder="Themes (comma separated)"
-                        value={profile.themes.join(', ')} // Display current themes
+                        value={profile.themes.join(', ')}
                         onChange={handleChange}
                     />
                     <button type="submit">Update Profile</button>

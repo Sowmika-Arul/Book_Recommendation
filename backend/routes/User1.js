@@ -5,13 +5,24 @@ const router = express.Router();
 
 // Create or update user profile
 router.post('/', async (req, res) => {
-    const { userId, name, email, photo, favoriteBooks, favoriteGenres, favoriteAuthors, themes } = req.body;
+    const { userId, name, email, photo, bio, favoriteBooks, favoriteGenres, favoriteAuthors, themes, followers, following } = req.body;
 
     try {
         // Use findOneAndUpdate to either update the existing user or create a new one
         const user = await User1.findOneAndUpdate(
             { userId },
-            { name, email, photo, favoriteBooks, favoriteGenres, favoriteAuthors, themes },
+            { 
+                name, 
+                email, 
+                photo, 
+                bio, // Update bio
+                favoriteBooks, 
+                favoriteGenres, 
+                favoriteAuthors, 
+                themes,
+                followers: followers || 0, // Use provided followers count or default to 0
+                following: following || 0, // Use provided following count or default to 0
+            },
             { new: true, upsert: true } // upsert: true means create if not found
         );
         res.status(200).json(user); // Respond with the updated or created user

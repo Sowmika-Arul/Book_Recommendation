@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.js';
 import https from 'https';
 import feedbackRoutes from './routes/Feedback_routes.js';
 import userRoutes from './routes/User1.js';
+import favoriteRoutes from './routes/favoriteRoutes.js';
 import multer from 'multer'; // Import multer for file uploads
 
 // Load environment variables from .env file
@@ -51,6 +52,8 @@ mongoose.connect(MONGO_URI, {
 app.use('/api/auth', authRoutes); 
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/profile', userRoutes);
+app.use('/favorites', favoriteRoutes);
+
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {

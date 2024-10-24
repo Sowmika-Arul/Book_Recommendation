@@ -8,59 +8,64 @@ body {
 }
 
 h1, h2 {
-  color: #333; 
+  color: #007bff; /* Blue color for headings for a more vibrant look */
   text-align: center; 
 }
 
 .profile-container {
   display: flex; 
   justify-content: space-between; 
-  max-width: 1200px; /* Limit max width */
-  margin: 0 auto; /* Center the profile container */
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
 .profile-left, .profile-right {
-  flex: 1; /* Take equal space */
-  padding: 20px; /* Padding for inner spacing */
-  margin: 10px; /* Margin between left and right sections */
-  background-color: #ffffff; /* White background for both sections */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+  flex: 1; 
+  padding: 20px; 
+  margin: 10px; 
+  background-color: #ffffff; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+  transition: transform 0.3s; /* Add transition for hover effect */
+}
+
+.profile-left:hover, .profile-right:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
 }
 
 .profile-image-container {
-  display: flex; /* Use flexbox to center the image */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  margin-bottom: 20px; /* Space below the image */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 20px; 
 }
 
 .profile-pic {
-  border-radius: 50%; 
-  border: 3px solid #007bff; /* Thicker border for the image */
-  width: 150px; /* Fixed width for profile image */
-  height: 150px; /* Fixed height for profile image */
+  border-radius: 8px; 
+  border: 3px solid #00ffcc; 
+  width: 420px; 
+  height: 400px; 
+  object-fit: cover; 
 }
-
-input[type="text"] {
-  width: 100%; /* Full width for input fields */
-  padding: 12px; /* Increased padding for comfort */
-  margin: 10px 0; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  box-sizing: border-box; 
-  transition: border-color 0.2s ease; /* Smooth transition for focus */
-}
-
 
 input[type="email"] {
-  width: 93%; /* Full width for input fields */
-  padding: 12px; /* Increased padding for comfort */
+  width: 92%; 
+  padding: 12px; 
   margin: 10px 0; 
   border: 1px solid #ccc; 
   border-radius: 4px; 
   box-sizing: border-box; 
-  transition: border-color 0.2s ease; /* Smooth transition for focus */
+  transition: border-color 0.2s ease; 
+}
+
+input[type="text"]{
+  width: 100%; 
+  padding: 12px; 
+  margin: 10px 0; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+  transition: border-color 0.2s ease; 
 }
 
 input[type="text"]:focus,
@@ -73,14 +78,34 @@ button {
   background-color: #007bff; 
   color: white; 
   border: none; 
-  padding: 12px 20px; /* More padding for buttons */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor */
-  font-size: 16px; /* Larger text */
-  margin-top: 10px; /* Space above the button */
-  transition: background-color 0.3s ease; /* Smooth transition for background */
+  padding: 12px 20px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  font-size: 16px; 
+  margin-top: 10px; 
+  transition: background-color 0.3s ease; 
 }
 
 button:hover {
   background-color: #0056b3; 
+}
+
+.follower-info {
+  text-align: center; 
+  margin-top: 20px; 
+  font-size: 16px; 
+  color: #34495e; 
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center align the follower info */
+}
+
+.follower-info p {
+  margin: 0 10px; /* Space between followers and following */
+}
+
+.bio {
+  text-align: center; 
+  margin: 10px 0; 
+  font-size: 14px; 
+  color: #7f8c8d; 
 }
