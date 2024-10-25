@@ -7,7 +7,8 @@ const FeedbackForm = () => {
         bookTitle: '',
         author: '',
         rating: 1,
-        comments: ''
+        comments: '',
+        reviewDate: ''  // Add reviewDate field
     });
 
     const handleChange = (e) => {
@@ -18,18 +19,22 @@ const FeedbackForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Capture the current date when submitting feedback
+        const currentDate = new Date().toISOString();  // Capture in ISO format
+        const updatedFormData = { ...formData, reviewDate: currentDate };
+
         try {
             const response = await fetch('http://localhost:5057/api/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(updatedFormData)  // Send the updated form data with reviewDate
             });
 
             if (response.ok) {
                 alert('Feedback submitted successfully!');
-                setFormData({ bookTitle: '', author: '', rating: 1, comments: '' });
+                setFormData({ bookTitle: '', author: '', rating: 1, comments: '', reviewDate: '' });
             } else {
                 alert('Error submitting feedback');
             }

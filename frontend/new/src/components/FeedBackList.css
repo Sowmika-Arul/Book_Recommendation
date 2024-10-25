@@ -1,5 +1,3 @@
-/* feedbackList.css */
-
 .feedback-list-container {
     max-width: 800px;
     margin: 50px auto;
@@ -7,7 +5,7 @@
     background-color: #f8f9fa;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
 }
 
 .feedback-list-container h2 {
@@ -15,6 +13,7 @@
     color: #333;
     margin-bottom: 20px;
     font-size: 26px;
+    font-weight: bold;
 }
 
 .feedback-item {
@@ -23,17 +22,19 @@
     padding: 15px;
     border-radius: 6px;
     border: 1px solid #ddd;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .feedback-item:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
 .feedback-item h4 {
     color: #007bff;
     margin: 0 0 10px 0;
     font-size: 20px;
+    font-weight: 600;
 }
 
 .feedback-item p {
@@ -55,17 +56,56 @@
     margin-right: 10px;
 }
 
+/* Filter Dropdown Styling */
+.filter-container {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+#rating-filter {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+#rating-filter:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Responsive Design for Mobile Screens */
 @media (max-width: 600px) {
     .feedback-list-container {
         width: 100%;
         padding: 15px;
     }
 
+    .feedback-list-container h2 {
+        font-size: 22px;
+    }
+
     .feedback-item h4 {
         font-size: 18px;
     }
 
-    .feedback-list-container h2 {
-        font-size: 22px;
+    .filter-container {
+        text-align: center;
     }
+
+    #rating-filter {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+}
+
+.feedback-date {
+    color: #888;
+    font-size: 14px;
+    margin-top: 5px;
 }

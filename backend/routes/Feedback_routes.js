@@ -3,17 +3,17 @@ import Feedback from '../models/Feedback.js';
 import dotenv from 'dotenv';
 
 const router = express.Router();
-// POST route to submit feedback
 dotenv.config();
 
 router.post('/', async (req, res) => {
-    const { bookTitle, author, rating, comments } = req.body;
+    const { bookTitle, author, rating, comments, reviewDate } = req.body; // Include reviewDate
 
     const newFeedback = new Feedback({
         bookTitle,
         author,
         rating,
-        comments
+        comments,
+        reviewDate // Set reviewDate from the request body if provided
     });
 
     try {

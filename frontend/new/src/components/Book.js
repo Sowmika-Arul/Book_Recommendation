@@ -226,9 +226,9 @@ const BooksSearch = () => {
                     )}
                     
                     {/* Favorite Button */}
-                    <button onClick={() => handleAddToFavorites(book)}>
-                      ❤️ Add to Favorites
-                    </button>
+                    <button className="favorite-button" onClick={() => handleAddToFavorites(book)}>
+    ❤️ Add to Favorites
+</button>
                   </div>
                 );
               })}

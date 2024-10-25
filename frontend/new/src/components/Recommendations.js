@@ -35,7 +35,7 @@ const Recommendations = ({ userId }) => {
     return (
         <div>
             <Navbar/>
-            <h1>Recommended Books</h1>
+            <h1>Personalised Reocmmendations</h1>
             {loading ? (
                 <p>Loading recommendations...</p> // Show loading message
             ) : error ? (

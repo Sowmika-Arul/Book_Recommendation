@@ -19,9 +19,9 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date: {
+    reviewDate: {  // Renamed to reviewDate
         type: Date,
-        default: Date.now
+        default: Date.now // If no reviewDate is provided, use current date
     }
 });
 
