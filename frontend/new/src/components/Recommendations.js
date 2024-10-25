@@ -31,11 +31,12 @@ const Recommendations = ({ userId }) => {
 
         fetchRecommendations(); // Call the async function
     }, [userId]);
+    
 
     return (
         <div>
             <Navbar/>
-            <h1>Personalised Reocmmendations</h1>
+            <h1>Personalised Recommendations</h1>
             {loading ? (
                 <p>Loading recommendations...</p> // Show loading message
             ) : error ? (
@@ -43,7 +44,13 @@ const Recommendations = ({ userId }) => {
             ) : recommendedBooks.length > 0 ? (
                 <div className="book-list">
                     {recommendedBooks.map((book, index) => (
-                        <div key={index} className="book-card">
+                        <a 
+                            key={index} 
+                            href={book.volumeInfo.infoLink} // Link to the book's details
+                            target="_blank" // Open in a new tab
+                            rel="noopener noreferrer" // Security measure
+                            className="book-card"
+                        >
                             <img
                                 src={book.volumeInfo.imageLinks?.thumbnail || 'https://via.placeholder.com/128x192?text=No+Cover'}
                                 alt={book.volumeInfo.title}
@@ -54,7 +61,7 @@ const Recommendations = ({ userId }) => {
                                 <p>by {book.volumeInfo.authors?.join(', ') || 'Unknown Author'}</p>
                                 <p>{book.volumeInfo.categories?.join(', ') || 'No categories available'}</p>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
             ) : (
