@@ -26,8 +26,24 @@ const PORT = process.env.PORT || 5057;
 const MONGO_URI = process.env.MONGODB_URL;
 
 // Middleware
-app.use(cors()); // Enable CORS
+const allowedOrigins = [
+    'https://ink-z331.onrender.com',
+  ...Array.from({length: 65535}, (_, i)=>`http://localhost:${i+1}`)
+]
 
+const corsOption = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    }
+    else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET','POST','PUT','DELETE'],
+  credentials: true,
+}
+app.use(cors());
 // Set up multer for file uploads with limits
 const upload = multer({
     dest: 'uploads/', // Directory for storing uploaded files
