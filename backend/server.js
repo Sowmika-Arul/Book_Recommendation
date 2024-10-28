@@ -32,19 +32,26 @@ const allowedOrigins = [
 ]
 
 const corsOption = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    }
-    else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET','POST','PUT','DELETE'],
-  credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.error(`Blocked by CORS: ${origin}`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  };
+  
+// Apply CORS with options
+app.use(cors(corsOption));
+
+// Ensure 'uploads' directory exists
+if (!fs.existsSync('uploads')) {
+  fs.mkdirSync('uploads');
 }
-app.use(cors());
-// Set up multer for file uploads with limits
+
 const upload = multer({
     dest: 'uploads/', // Directory for storing uploaded files
     limits: {
