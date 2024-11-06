@@ -8,7 +8,7 @@ const AwardedBooks = () => {
   const [year, setYear] = useState('2023'); // Default year set to 2023
 
   const fetchAwardedBooks = async (year) => {
-    const API_KEY = 'c4901fbbf6mshe559c7655f29ebdp1fc8e3jsn44bc2a28f0a1';
+    const API_KEY = '0ecc576b47mshbc0ab5d515aa6eep1d1dbajsnfa44d559c207';
 
     try {
       setLoading(true);

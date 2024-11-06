@@ -7,7 +7,7 @@ function App() {
   const [query, setQuery] = useState('');
   const [bookDetails, setBookDetails] = useState(null);
   const [message, setMessage] = useState('');
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [showModal, setShowModal] = useState(false); 
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -31,7 +31,7 @@ function App() {
           const txtUrl = book.formats['text/plain; charset=us-ascii'];
 
           setBookDetails({
-            title,
+             title,
             authors,
             description,
             txtUrl
@@ -87,7 +87,7 @@ function App() {
         {showModal && bookDetails && bookDetails.txtUrl && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <button onClick={handleCloseModal} className="close-button">Close</button>
+              <button onClick={handleCloseModal} className="close-button">x</button>
               <iframe 
                 src={bookDetails.txtUrl} 
                 title="Book Reader" 
