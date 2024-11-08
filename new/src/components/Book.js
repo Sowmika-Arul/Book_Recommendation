@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Book.css'; // Include the CSS changes here
+import './Book.css';
 import Navbar from './Navbar.js';
 
 const BooksSearch = () => {
@@ -8,38 +8,24 @@ const BooksSearch = () => {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedAuthor, setSelectedAuthor] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); // State for current page
-  const [totalBooks, setTotalBooks] = useState(0); // State for total number of books
-  const booksPerPage = 12; // Number of books per page
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalBooks, setTotalBooks] = useState(0);
+  const booksPerPage = 12;
   const apiKey = 'AIzaSyB1ZDjfU1JjNa8SE57ojxvCfQiHrBbCPy4';
-  const userId = localStorage.getItem('userId'); // Fetch user ID from local storage
+  const userId = localStorage.getItem('userId');
 
   const categories = [
-    'Fiction',
-    'Science',
-    'Technology',
-    'History',
-    'Mystery',
-    'Romance',
-    'Fantasy',
-    'Biography',
-    'Self-Help',
+    'Fiction', 'Science', 'Technology', 'History', 'Mystery', 'Romance', 'Fantasy', 'Biography', 'Self-Help',
   ];
 
   const authors = [
-    'J.K. Rowling',
-    'Stephen King',
-    'Isaac Asimov',
-    'Agatha Christie',
-    'J.R.R. Tolkien',
-    'George R.R. Martin',
-    'Ernest Hemingway',
+    'J.K. Rowling', 'Stephen King', 'Isaac Asimov', 'Agatha Christie', 'J.R.R. Tolkien', 'George R.R. Martin', 'Ernest Hemingway',
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCurrentPage(1); // Reset to first page when a new search is made
-    fetchBooks(query, 0); // Fetch the first set of books
+    setCurrentPage(1);
+    fetchBooks(query, 0);
   };
 
   const fetchBooks = (query, startIndex) => {
@@ -48,7 +34,7 @@ const BooksSearch = () => {
       .then((data) => {
         if (data.items) {
           setBooks(data.items);
-          setTotalBooks(Math.min(data.totalItems, 100)); // Cap total books to 100
+          setTotalBooks(Math.min(data.totalItems, 100));
           setError(null);
         } else {
           setBooks([]);
@@ -63,12 +49,12 @@ const BooksSearch = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${selectedCategory}&startIndex=${(currentPage - 1) * booksPerPage}&maxResults=12&key=${apiKey}`)
+      fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${selectedCategory}&startIndex=${(currentPage - 1) * booksPerPage}&maxResults=${booksPerPage}&key=${apiKey}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.items) {
             setBooks(data.items);
-            setTotalBooks(Math.min(data.totalItems, 100)); // Cap total books to 100
+            setTotalBooks(Math.min(data.totalItems, 100));
             setError(null);
           } else {
             setBooks([]);
@@ -80,12 +66,12 @@ const BooksSearch = () => {
           console.error('Error fetching books:', error);
         });
     } else if (selectedAuthor) {
-      fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${selectedAuthor}&startIndex=${(currentPage - 1) * booksPerPage}&maxResults=12&key=${apiKey}`)
+      fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${selectedAuthor}&startIndex=${(currentPage - 1) * booksPerPage}&maxResults=${booksPerPage}&key=${apiKey}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.items) {
             setBooks(data.items);
-            setTotalBooks(Math.min(data.totalItems, 100)); // Cap total books to 100
+            setTotalBooks(Math.min(data.totalItems, 100));
             setError(null);
           } else {
             setBooks([]);
@@ -120,7 +106,6 @@ const BooksSearch = () => {
       webReaderLink: book.volumeInfo.webReaderLink || ''
     };
 
-    // Use Fetch API to post favorite book to the server
     fetch('http://localhost:5057/favorites', {
       method: 'POST',
       headers: {
@@ -133,12 +118,17 @@ const BooksSearch = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Book added to favorites:', data);
       alert('Book added to favorites');
     })
     .catch(error => {
       console.error('Error adding book to favorites:', error);
     });
+  };
+
+  const generateWhatsAppLink = (book) => {
+    const title = book.volumeInfo.title || 'Check out this book!';
+    const link = book.volumeInfo.infoLink || window.location.href;
+    return `https://api.whatsapp.com/send?text=${encodeURIComponent(title + " " + link)}`;
   };
 
   return (
@@ -157,7 +147,7 @@ const BooksSearch = () => {
                     onChange={() => {
                       setSelectedCategory(category);
                       setSelectedAuthor('');
-                      setCurrentPage(1); // Reset to first page
+                      setCurrentPage(1);
                     }}
                   />
                   {category}
@@ -177,7 +167,7 @@ const BooksSearch = () => {
                     onChange={() => {
                       setSelectedAuthor(author);
                       setSelectedCategory('');
-                      setCurrentPage(1); // Reset to first page
+                      setCurrentPage(1);
                     }}
                   />
                   {author}
@@ -209,9 +199,8 @@ const BooksSearch = () => {
                 return (
                   <div key={index} className="book-item">
                     {imageLinks && imageLinks.thumbnail && (
-                      <img src={imageLinks.thumbnail} alt={`Cover of ${title}`} />
+                      <center><img src={imageLinks.thumbnail} alt={`Cover of ${title}`} /></center>
                     )}
-
                     <h3>{title || 'No title'}</h3>
                     <p><strong>Authors:</strong> {authors ? authors.join(', ') : 'No authors'}</p>
                     <p><strong>Publisher:</strong> {publisher || 'No publisher'}</p>
@@ -225,29 +214,25 @@ const BooksSearch = () => {
                       </p>
                     )}
                     
-                    {/* Favorite Button */}
                     <button className="favorite-button" onClick={() => handleAddToFavorites(book)}>
-    ❤️ Add to Favorites
-</button>
+                      ❤️ Add to Favorites
+                    </button>
+
+                    <a href={generateWhatsAppLink(book)} target="_blank" rel="noopener noreferrer">
+                      <button className="whatsapp-button">📤 Share on WhatsApp</button>
+                    </a>
                   </div>
                 );
               })}
           </div>
 
-          {/* Pagination Controls with Arrows (aligned right) */}
           {totalBooks > booksPerPage && (
             <div className="pagination">
-              <button
-                onClick={() => handlePageChange('prev')}
-                disabled={currentPage === 1}
-              >
+              <button onClick={() => handlePageChange('prev')} disabled={currentPage === 1}>
                 Previous
               </button>
               <span>Page {currentPage} of {Math.ceil(totalBooks / booksPerPage)}</span>
-              <button
-                onClick={() => handlePageChange('next')}
-                disabled={currentPage === Math.ceil(totalBooks / booksPerPage)}
-              >
+              <button onClick={() => handlePageChange('next')} disabled={currentPage === Math.ceil(totalBooks / booksPerPage)}>
                 Next
               </button>
             </div>

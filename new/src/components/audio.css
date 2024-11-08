@@ -1,0 +1,126 @@
+/* Buttons container */
+.button-container {
+    display: flex;              /* Arrange buttons in a row */
+    gap: 15px;                  /* Adds space between the buttons */
+    margin-top: 10px;           /* Adds space above the buttons */
+  }
+  
+  /* General Button Styles */
+  .btn {
+    padding: 12px 20px;
+    border-radius: 25px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .audiobook-button {
+    background-color: #add8e6; /* Light blue color */
+    color: #004f68; /* Dark text for contrast */
+    border: 1px solid #add8e6;
+  }
+  
+  .audiobook-button:hover {
+    background-color: #87ceeb; /* Slightly darker blue on hover */
+    border-color: #87ceeb;
+  }
+  
+  .download-button {
+    background-color: #d3ffd3; /* Light green color */
+    color: #2e8b57; /* Dark green text for contrast */
+    border: 1px solid #d3ffd3;
+  }
+  
+  .download-button:hover {
+    background-color: #b0e0a8; /* Slightly darker green on hover */
+    border-color: #b0e0a8;
+  }
+  
+  /* Other Styles (unchanged from previous examples) */
+  
+  /* Search Container */
+  .search-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Search Input */
+  .search-container input {
+    padding: 12px 15px;
+    width: 350px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Audiobooks Grid */
+  .audiobooks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  /* Audiobook Card */
+  .audiobook-card {
+    border: 1px solid #f0f0f0;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .audiobook-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Pagination */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .pagination button {
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background-color:black; /* Light gray background */
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Hover effect for Previous/Next buttons */
+  .pagination button:hover:not(:disabled) {
+    background-color:white;  /* Green color on hover */
+    color: black;               /* White text */
+  }
+  
+  /* Disabled state for buttons */
+  .pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #ddd;     /* Light gray for disabled */
+    color: #aaa;                /* Light gray text */
+  }
+  
+  /* Optional: Active state (for current page or active button) */
+  .pagination button.active {
+    background-color: #007bff;  /* Blue color for active state */
+    color: white;
+    font-weight: bold;
+  }
+  

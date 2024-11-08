@@ -3,127 +3,93 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
-import https from 'https';
 import feedbackRoutes from './routes/Feedback_routes.js';
 import userRoutes from './routes/User1.js';
 import favoriteRoutes from './routes/favoriteRoutes.js';
-import multer from 'multer'; // Import multer for file uploads
+import multer from 'multer';
+import fetch from 'node-fetch'; 
 
-// Load environment variables from .env file
 dotenv.config();
 
-// Validate required environment variables
+// Ensure that MongoDB URL is set
 if (!process.env.MONGODB_URL) {
     console.error('MONGODB_URL is not defined in the environment variables.');
-    process.exit(1); // Exit the application if the variable is missing
+    process.exit(1);
 }
 
-// Create Express app
+// Initialize Express app
 const app = express();
-
-// Access environment variables
 const PORT = process.env.PORT || 5057;
 const MONGO_URI = process.env.MONGODB_URL;
 
-// Middleware
+// CORS configuration
 const allowedOrigins = [
-    'https://ink-z331.onrender.com',
-  ...Array.from({length: 65535}, (_, i)=>`http://localhost:${i+1}`)
-]
+  'https://ink-z331.onrender.com',  // Replace with your deployed URL
+  'http://localhost:3000',  // Localhost React app
+];
 
-const corsOption = {
+const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
-    }
-    else {
+    } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET','POST','PUT','DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-}
-app.use(cors());
-// Set up multer for file uploads with limits
+};
+
+app.use(cors(corsOptions));
+
+// Middleware for file uploads
 const upload = multer({
-    dest: 'uploads/', // Directory for storing uploaded files
-    limits: {
-        fileSize: 5 * 1024 * 1024, // Limit files to 5MB
-    },
+  dest: 'uploads/',
+  limits: { fileSize: 5 * 1024 * 1024 },  // 5MB max
 });
 
-// Parse JSON bodies with a limit (set to 10MB)
-app.use(express.json({ limit: '10mb' })); // Increase the limit as needed
-app.use(express.urlencoded({ limit: '10mb', extended: true })); // For URL-encoded data
+// Middleware for parsing request bodies
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-// Connect to MongoDB Atlas
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB Atlas'))
-.catch(err => console.error('Error connecting to MongoDB Atlas:', err));
+// MongoDB connection
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch(err => console.error('Error connecting to MongoDB Atlas:', err));
 
-// Use authentication routes
-app.use('/api/auth', authRoutes); 
+// Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/profile', userRoutes);
 app.use('/favorites', favoriteRoutes);
 
+// Modify the API to accept pagination query parameters
+app.get('/audiobooks', async (req, res) => {
+    const { page = 1, limit = 2000, search = '' } = req.query;
+    try {
+      const url = `https://librivox.org/api/feed/audiobooks/?title=${encodeURIComponent(search)}&limit=${limit}&page=${page}&format=json`;
+      const response = await fetch(url);
+      const data = await response.json();
+      res.json(data);  // Return data to frontend
+    } catch (error) {
+      console.error('Error fetching data from Librivox API:', error);
+      res.status(500).json({ error: 'Failed to fetch audiobooks data' });
+    }
+  });
+  
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
-    res.status(404).send('Route not found');
+  res.status(404).send('Route not found');
 });
 
-// Error handling middleware
+// General error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
-
-// Endpoint to fetch book content
-app.get('/fetch-book', (req, res) => {
-    const bookUrl = req.query.url;
-
-    console.log('Received request for URL:', bookUrl); // Log the requested URL
-
-    if (!bookUrl) {
-        return res.status(400).send('Book URL is required.');
-    }
-
-    // Use https.get to fetch book content with timeout
-    const request = https.get(bookUrl, (response) => {
-        let data = '';
-
-        response.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        response.on('end', () => {
-            if (response.statusCode === 200) {
-                res.send(data); // Send the book content
-            } else {
-                res.status(response.statusCode).send('Failed to fetch book content.');
-            }
-        });
-
-    });
-
-    // Handle request errors
-    request.on('error', (error) => {
-        console.error('Error fetching book content:', error.message);
-        res.status(500).send('Error fetching book content.');
-    });
-
-    // Set timeout for the request
-    request.setTimeout(10000, () => { // 10 seconds timeout
-        request.abort();
-        res.status(500).send('Request timed out.');
-    });
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -10,6 +10,7 @@ import Reader from './components/BookReader';
 import Profile from './components/Profile';
 import Favorite from './components/Favorite';
 import Recommendations from './components/Recommendations';
+import Audio from './components/Audio';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/award" element={<Award />} />
           <Route path="/feedform" element={<FeedForm />} />
+          <Route path="/audio" element={<Audio />} />
           <Route path="/feedback" element={<FeedList />} />
           <Route path="/bookreader" element={<Reader />} />
           <Route path="/favorite" element={<Favorite />} />
