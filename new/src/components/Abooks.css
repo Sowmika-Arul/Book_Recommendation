@@ -1,68 +1,67 @@
-
+/* Style for the search box section */
 .awarded-books-input {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
   width: 100%;
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  right: 0;
-  background-color: #f7f7f7; 
-  z-index: 1000; 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  background-color: #f7f7f7;
+  z-index: 1000; /* Lower z-index than navbar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding-top: 15px;
+  box-sizing: border-box;
 }
-
 
 .awarded-books-input input {
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 250px; 
-  margin-top: 20px; 
+  width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .awarded-books-input button {
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 1rem;
   background-color: #007bff;
   color: white;
   border: none;
+  margin-top: -4px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px; 
 }
 
 .awarded-books-input button:hover {
   background-color: #0056b3;
 }
 
-
+/* Content section */
 .awarded-books-content {
-  min-width:5000px; 
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 150px; /* Give space for navbar and search bar */
 }
-
 
 .awarded-books-loading, .awarded-books-error {
   font-size: 1rem;
   color: #ff0000;
 }
 
+/* Style for the books list */
 .awarded-books-list {
   list-style: none;
   padding: 0;
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  margin-top: -130px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 50px;
   justify-content: center;
 }
 
-
+/* Style for each book item */
 .awarded-books-item {
   background-color: white;
   border-radius: 8px;
@@ -88,7 +87,6 @@
   margin-bottom: 10px;
 }
 
-
 .awarded-books-title-item {
   font-size: 1.1rem;
   margin: 10px 0 5px;
@@ -100,7 +98,7 @@
   color: #777;
 }
 
-
+/* Style for no results message */
 .awarded-books-no-results {
   text-align: center;
   font-size: 1rem;
@@ -108,21 +106,54 @@
   margin-top: 20px;
 }
 
+/* Media Queries */
 @media (max-width: 768px) {
+  /* Adjust the book grid layout for smaller screens */
   .awarded-books-list {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
   }
 
-
+  /* Adjust the width of the search input and button for smaller screens */
   .awarded-books-input {
+    width: 100%;
+    padding: 15px 10px;
+  }
+
+  .awarded-books-input input,
+  .awarded-books-input button {
     width: 100%;
   }
 
-  .awarded-books-input input, .awarded-books-input button {
-    width: 100%; 
-  }
-
+  /* Adjust the content section margin to accommodate fixed search box */
   .awarded-books-content {
-    margin-top: 220px; 
+    margin-top: 200px; /* Increased margin for smaller screen to avoid overlap */
   }
 }
+
+@media (max-width: 480px) {
+  /* Further adjustments for very small screens */
+  .awarded-books-input input,
+  .awarded-books-input button {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  /* Reduce gap between books on very small screens */
+  .awarded-books-list {
+    gap: 10px;
+  }
+}
+
+/* Flexbox for the label and input inline */
+.awarded-books-input .input-container {
+  display: flex;
+  align-items: center;  /* Aligns the label and input on the same line */
+  gap: 10px;  /* Adds some space between the label and input */
+  margin-bottom: 10px;
+}
+
+.awarded-books-input label {
+  font-size: 1rem;
+}
+

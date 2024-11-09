@@ -10,6 +10,22 @@ body{
     padding: 20px 50px;
     background-color: #f0f4fc;
   }
+
+  .logout-btn {
+    background-color: #ff4d4d;  /* Red color for logout */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .logout-btn:hover {
+    background-color: #ff1a1a;  /* Darker red on hover */
+  }
   
   .logo {
     font-size: 1.5rem;

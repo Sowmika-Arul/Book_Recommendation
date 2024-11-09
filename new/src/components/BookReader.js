@@ -1,5 +1,5 @@
-// src/App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import './BookReader.css';
 import Navbar from './Navbar.js';
 
@@ -8,6 +8,15 @@ function App() {
   const [bookDetails, setBookDetails] = useState(null);
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false); 
+  const navigate = useNavigate(); // Initialize navigate function
+
+  // Check if userId exists in localStorage on component mount
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      navigate('/'); // Redirect to login if userId is not found
+    }
+  }, [navigate]); // Run only once on component mount
 
   const handleSearch = (event) => {
     event.preventDefault();

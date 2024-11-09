@@ -1,6 +1,5 @@
-// Profile.js
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Profile.css';
 
 const Profile = () => {
@@ -17,10 +16,15 @@ const Profile = () => {
         following: 0,
     });
 
-    const [userId, setUserId] = useState(localStorage.getItem('userId') || '');
+    const [userId, setUserId] = useState(localStorage.getItem('userId') || ''); // Retrieve userId from localStorage
+    const navigate = useNavigate(); // useNavigate hook for redirection
 
+    // Check for userId in localStorage and redirect to login if it's not present
     useEffect(() => {
-        if (userId) {
+        if (!userId) {
+            navigate('/'); // Redirect to login if no userId
+        } else {
+            // Fetch profile data if userId exists
             fetch(`http://localhost:5057/api/profile/${userId}`)
                 .then(res => res.json())
                 .then(data => {
@@ -41,7 +45,7 @@ const Profile = () => {
                     console.error('Error fetching profile:', error);
                 });
         }
-    }, [userId]);
+    }, [userId, navigate]); // Only run once on mount or when userId changes
 
     const handleChange = (e) => {
         const { name, value } = e.target;

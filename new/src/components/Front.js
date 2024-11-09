@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './front.css';
 import Navbar from './Navbar.js';
 
 const FrontPage = () => {
+  const navigate = useNavigate(); // useNavigate hook for redirection
+  const userId = localStorage.getItem('userId'); // Get userId from localStorage
+
+  // Check for userId in localStorage and redirect to login if it's not present
+  useEffect(() => {
+    if (!userId) {
+      navigate('/'); // Redirect to login if no userId
+    }
+  }, [userId, navigate]);
+
   return (
     <>
-      <Navbar /> 
+      <Navbar />
       <div className="container">
         <div className="left-side">
           <h1>Book Collection</h1>
@@ -14,7 +25,7 @@ const FrontPage = () => {
             books with all possible categories, take advantage of the 50% discount
             and much more.
           </p>
-          <button className="explore-btn">Explore Now</button>
+         <a href="/book"><button className="explore-btn">Explore Now</button></a>
         </div>
 
         <div className="right-side">

@@ -23,7 +23,7 @@ const BooksSearch = () => {
   ];
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form submission
     setCurrentPage(1);
     fetchBooks(query, 0);
   };
@@ -34,7 +34,7 @@ const BooksSearch = () => {
       .then((data) => {
         if (data.items) {
           setBooks(data.items);
-          setTotalBooks(Math.min(data.totalItems, 100));
+          setTotalBooks(Math.min(data.totalItems, 100)); // Limit to a maximum of 100 items
           setError(null);
         } else {
           setBooks([]);
@@ -47,45 +47,23 @@ const BooksSearch = () => {
       });
   };
 
+  // Fetch books when the component mounts with a default query or selected filter
+  useEffect(() => {
+    // Initial fetch (e.g., default category or 'fiction' search)
+    fetchBooks('fiction', (currentPage - 1) * booksPerPage);
+  }, [currentPage]);  // Run effect when `currentPage` changes
+
   useEffect(() => {
     if (selectedCategory) {
-      fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${selectedCategory}&startIndex=${(currentPage - 1) * booksPerPage}&maxResults=${booksPerPage}&key=${apiKey}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.items) {
-            setBooks(data.items);
-            setTotalBooks(Math.min(data.totalItems, 100));
-            setError(null);
-          } else {
-            setBooks([]);
-            setError('No books found for the selected category');
-          }
-        })
-        .catch((error) => {
-          setError('Error fetching books');
-          console.error('Error fetching books:', error);
-        });
+      fetchBooks(`subject:${selectedCategory}`, (currentPage - 1) * booksPerPage);
     } else if (selectedAuthor) {
-      fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${selectedAuthor}&startIndex=${(currentPage - 1) * booksPerPage}&maxResults=${booksPerPage}&key=${apiKey}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.items) {
-            setBooks(data.items);
-            setTotalBooks(Math.min(data.totalItems, 100));
-            setError(null);
-          } else {
-            setBooks([]);
-            setError('No books found for the selected author');
-          }
-        })
-        .catch((error) => {
-          setError('Error fetching books');
-          console.error('Error fetching books:', error);
-        });
+      fetchBooks(`inauthor:${selectedAuthor}`, (currentPage - 1) * booksPerPage);
+    } else if (query) {
+      fetchBooks(query, (currentPage - 1) * booksPerPage);
     } else {
       setBooks([]);
     }
-  }, [selectedCategory, selectedAuthor, currentPage]);
+  }, [selectedCategory, selectedAuthor, query, currentPage]);  // Trigger fetch on category, author, or query change
 
   const handlePageChange = (direction) => {
     if (direction === 'next' && currentPage < Math.ceil(totalBooks / booksPerPage)) {
@@ -93,6 +71,8 @@ const BooksSearch = () => {
     } else if (direction === 'prev' && currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
+    // Prevent default form submission that might cause scroll jump
+    window.scrollTo(0, 0);  // Scroll to the top to avoid jumpy behavior
   };
 
   const handleAddToFavorites = (book) => {
@@ -147,6 +127,7 @@ const BooksSearch = () => {
                     onChange={() => {
                       setSelectedCategory(category);
                       setSelectedAuthor('');
+                      setQuery('');
                       setCurrentPage(1);
                     }}
                   />
@@ -167,6 +148,7 @@ const BooksSearch = () => {
                     onChange={() => {
                       setSelectedAuthor(author);
                       setSelectedCategory('');
+                      setQuery('');
                       setCurrentPage(1);
                     }}
                   />

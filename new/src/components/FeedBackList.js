@@ -1,30 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import './FeedBackList.css';
 import Navbar from './Navbar.js';
+import { useNavigate } from 'react-router-dom';
 
 const FeedbackList = () => {
     const [feedbacks, setFeedbacks] = useState([]);
     const [filteredFeedbacks, setFilteredFeedbacks] = useState([]);
-    const [ratingFilter, setRatingFilter] = useState('All');  // Default filter is 'All'
+    const [ratingFilter, setRatingFilter] = useState('All');  
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
+  
+    // Check if user is logged in
+    const userId = localStorage.getItem('userId');
 
     useEffect(() => {
-        const fetchFeedbacks = async () => {
-            try {
-                const response = await fetch('http://localhost:5057/api/feedback');
-                if (response.ok) {
-                    const data = await response.json();
-                    setFeedbacks(data);
-                    setFilteredFeedbacks(data); // Initialize with all feedbacks
-                } else {
-                    console.error('Failed to fetch feedback');
+        if (!userId) {
+            // If user is not logged in, redirect to login page
+            setErrorMessage('You need to be logged in to view the feedback.');
+            navigate('/');  // You can change the route to your login page
+        } else {
+            // Fetch feedbacks if the user is logged in
+            const fetchFeedbacks = async () => {
+                try {
+                    const response = await fetch('http://localhost:5057/api/feedback');
+                    if (response.ok) {
+                        const data = await response.json();
+                        setFeedbacks(data);
+                        setFilteredFeedbacks(data); // Initialize with all feedbacks
+                    } else {
+                        console.error('Failed to fetch feedback');
+                    }
+                } catch (err) {
+                    console.error('Error fetching feedback:', err);
                 }
-            } catch (err) {
-                console.error('Error fetching feedback:', err);
-            }
-        };
+            };
 
-        fetchFeedbacks();
-    }, []);
+            fetchFeedbacks();
+        }
+    }, [userId, navigate]);
 
     // Filter feedbacks when rating filter changes
     useEffect(() => {
@@ -47,6 +60,9 @@ const FeedbackList = () => {
             <Navbar />
             <div className="feedback-list-container">
                 <h2>Feedback List</h2>
+
+                {/* Display error message if not logged in */}
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
 
                 {/* Rating Filter Dropdown */}
                 <div className="filter-container">

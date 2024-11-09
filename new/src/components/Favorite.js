@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar.js';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();  // Hook for navigation
 
   useEffect(() => {
+    // Check if userId exists in localStorage
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       setUserId(storedUserId);
     } else {
       setError('User ID not found in local storage');
       setLoading(false);
+      navigate('/'); // Redirect to login if no userId found
     }
-  }, []);
+  }, [navigate]);  // Added navigate as a dependency
 
   useEffect(() => {
     if (userId) {
@@ -66,111 +70,102 @@ const FavoritesPage = () => {
 
   return (
     <div>
-    <Navbar/>
-    <div className="fav-page">
-      <h2>Your Favorite Books</h2>
-      {favorites.length === 0 ? (
-        <p>No favorites found.</p>
-      ) : (
-        <div className="fav-book-list">
-          {favorites.map((favorite) => (
-            <div key={favorite._id} className="fav-book-item">
-              <img src={favorite.book.thumbnail} alt={favorite.book.title} className="book-image" />
-              <div className="book-details">
-                <h3>{favorite.book.title}</h3>
-                <p><strong>Author:</strong> {favorite.book.authors.join(', ')}</p>
-                <p><strong>Published:</strong> {favorite.book.publishedDate}</p>
-                <button className="fav-delete-button" onClick={() => handleDelete(favorite._id)}>
-                  Remove
-                </button>
+      <Navbar />
+      <div className="fav-page">
+        <h2>Your Favorite Books</h2>
+        {favorites.length === 0 ? (
+          <p>No favorites found.</p>
+        ) : (
+          <div className="fav-book-list">
+            {favorites.map((favorite) => (
+              <div key={favorite._id} className="fav-book-item">
+                <img src={favorite.book.thumbnail} alt={favorite.book.title} className="book-image" />
+                <div className="book-details">
+                  <h3>{favorite.book.title}</h3>
+                  <p><strong>Author:</strong> {favorite.book.authors.join(', ')}</p>
+                  <p><strong>Published:</strong> {favorite.book.publishedDate}</p>
+                  <button className="fav-delete-button" onClick={() => handleDelete(favorite._id)}>
+                    Remove
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
-</div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <style jsx>{`
-        /* Container for the favorites page */
         .fav-page {
           padding: 40px;
-          background-color: #f0f4f8; /* Light background for contrast */
+          background-color: #f0f4f8;
           border-radius: 8px;
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-          max-width: 600px; /* Centering the content */
-          margin: 20px auto; /* Centering the page */
+          max-width: 600px;
+          margin: 20px auto;
         }
 
-        /* Heading styling */
         .fav-page h2 {
           margin-bottom: 30px;
           font-size: 24px;
           color: #333;
-          text-align: center; /* Center the title */
+          text-align: center;
         }
 
-        /* Book list container */
         .fav-book-list {
           display: flex;
           flex-direction: column;
-          gap: 20px; /* Space between book items */
+          gap: 20px;
         }
 
-        /* Book item styling */
         .fav-book-item {
-          display: flex; /* Align image and details side by side */
+          display: flex;
           background-color: #ffffff;
           padding: 20px;
           border-radius: 10px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
           text-align: left;
-          transition: transform 0.2s; /* Smooth scale effect */
+          transition: transform 0.2s;
         }
 
-        /* Scale effect on hover */
         .fav-book-item:hover {
-          transform: scale(1.02); /* Slightly scale up on hover */
+          transform: scale(1.02);
         }
 
-        /* Book image styling */
         .book-image {
-          width: 100px; /* Fixed width for the book image */
+          width: 100px;
           border-radius: 10px;
-          margin-right: 20px; /* Space between image and text */
+          margin-right: 20px;
         }
 
-        /* Book details styling */
         .book-details {
-          flex-grow: 1; /* Take up remaining space */
+          flex-grow: 1;
         }
 
-        /* Book title styling */
         .book-details h3 {
           font-size: 20px;
           margin: 10px 0;
           color: #333;
         }
 
-        /* Metadata styling */
         .book-details p {
           margin: 5px 0;
           font-size: 16px;
           color: #555;
         }
 
-        /* Delete button styling */
         .fav-delete-button {
           padding: 10px 15px;
-          background-color: #ff4d4d; /* Red color for delete */
+          background-color: #ff4d4d;
           color: white;
           border: none;
           border-radius: 5px;
           cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
+          transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .fav-delete-button:hover {
-          background-color: #ff1a1a; /* Darker red on hover */
-          transform: scale(1.05); /* Slightly enlarge button on hover */
+          background-color: #ff1a1a;
+          transform: scale(1.05);
         }
       `}</style>
     </div>

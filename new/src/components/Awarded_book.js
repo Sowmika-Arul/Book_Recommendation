@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 import './Abooks.css'; // Updated file name
+import Navbar from './Navbar.js';
 
 const AwardedBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [year, setYear] = useState('2023'); // Default year set to 2023
+  const [userId, setUserId] = useState(null); // User ID state
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const fetchAwardedBooks = async (year) => {
     const API_KEY = '0ecc576b47mshbc0ab5d515aa6eep1d1dbajsnfa44d559c207';
@@ -47,25 +51,39 @@ const AwardedBooks = () => {
     }
   };
 
-  // Fetch awarded books for the default year (2023) when the component mounts
+  // Check if the userId exists in localStorage when the component mounts
   useEffect(() => {
-    fetchAwardedBooks(year);
-  }, [year]); // Only re-fetch when the year changes
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+      fetchAwardedBooks(year); // Fetch books if user is logged in
+    } else {
+      setError('User not logged in. Redirecting to login page...');
+      navigate('/'); // Redirect to login page if userId is not found
+    }
+  }, [year, navigate]); // Only re-fetch when the year changes or navigate function changes
 
   return (
     <div className="awarded-books-container">
-      <div className="awarded-books-input">
-        <label htmlFor="year">Enter Year:</label>
-        <input
-          type="number"
-          id="year"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          placeholder="e.g. 2021"
-        />
-        <button onClick={handleSearch}>Search</button>
+      <Navbar />
+      <div className="search-box-container">
+        <div className="awarded-books-input">
+        <div className="input-container"> 
+          <label htmlFor="year">Enter Year:</label>
+          <input
+            type="number"
+            id="year"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            placeholder="e.g. 2021"
+          />
+           <button onClick={handleSearch}>Search</button>
+           </div>
+        </div>
       </div>
-      <h1><center>Awarded books of the year</center></h1>
+
+      <h1><center>Awarded Books of the Year</center></h1>
+
       {/* Dynamic content area */}
       <div className="awarded-books-content">
         {loading && <p className="awarded-books-loading">Loading...</p>}
