@@ -1,4 +1,4 @@
-
+Profile.css
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -46,6 +46,17 @@ h1, h2 {
   width: 250px; /* Adjust size as needed */
   height: 250px; /* Adjust size as needed */
   object-fit: cover; /* Ensure the image is correctly contained in the circle */
+}
+
+
+.profile-right input[type="email"] {
+  width: 92%; 
+  padding: 12px; 
+  margin: 10px 0; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+  transition: border-color 0.2s ease; 
 }
 
 .profile-right input[type="text"]{
