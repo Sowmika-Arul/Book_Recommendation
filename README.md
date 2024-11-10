@@ -6,7 +6,8 @@
  - Feedback Module
  - Recommendation Module
  - Read Books Online
-
+ - Audiobooks module
+   
 ## STACK
 - React
 - Node JS, Express
@@ -16,4 +17,5 @@
    - Store favorites of each User
 - Google API 
 - Rapid API
-- Gutendex API (To read books online)
+- Gutenberg API (To read books online)
+- Librivox API (For audio books)
