@@ -4,30 +4,30 @@ import './Login.css';
 import imgbook from '../assets/images/book.avif';
 
 function Login() {
-  const [isLogin, setIsLogin] = useState(true); // Toggle between login and sign-up form
+  const [isLogin, setIsLogin] = useState(true); 
   const [formData, setFormData] = useState({
-    name: '',      // Only needed for sign-up
+    name: '',      
     email: '',
     password: ''
   });
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
 
-  // Handle form field changes
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  // Handle form submission (login or sign-up)
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Choose the appropriate endpoint for login or sign-up
+   
     const endpoint = isLogin 
       ? 'http://localhost:5057/api/auth/login' 
       : 'http://localhost:5057/api/auth/signup';
 
     try {
-      // Send the request to the backend
+      
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -40,32 +40,31 @@ function Login() {
         throw new Error('Network response was not ok');
       }
 
-      // Get the result from the backend
       const result = await response.json();
       console.log('Success:', result);
 
-      // Store token and user ID if available
+   
       if (result.token) {
-        localStorage.setItem('authToken', result.token); // Store the token
+        localStorage.setItem('authToken', result.token); 
         console.log('Token:', result.token);
       }
 
       if (result.userId) {
-        localStorage.setItem('userId', result.userId); // Store the user ID
+        localStorage.setItem('userId', result.userId); 
         console.log('User ID:', result.userId);
       }
 
-      // Redirect to the main application after login/signup
-      navigate('/front'); // Adjust the path as needed
+     
+      navigate('/front'); 
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-  // Toggle between login and sign-up form
+
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setFormData({ name: '', email: '', password: '' }); // Reset form data when toggling
+    setFormData({ name: '', email: '', password: '' }); 
   };
 
   return (

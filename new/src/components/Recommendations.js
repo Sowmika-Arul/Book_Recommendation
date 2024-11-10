@@ -5,31 +5,30 @@ import Navbar from './Navbar.js';
 
 const Recommendations = ({ userId }) => {
     const [recommendedBooks, setRecommendedBooks] = useState([]);
-    const [loading, setLoading] = useState(true); // Loading state
-    const [error, setError] = useState(null); // Error state
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
-                console.log('Fetching profile data for userId:', userId); // Log userId
+                console.log('Fetching profile data for userId:', userId);
                 const res = await fetch(`http://localhost:5057/api/profile/${userId}`);
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
                 const profileData = await res.json();
 
-                // Fetch recommended books based on the profile
-                const books = await fetchRecommendedBooks(profileData); // Pass entire profile object
+                const books = await fetchRecommendedBooks(profileData); 
     
-                setRecommendedBooks(books); // Update state with recommended books
+                setRecommendedBooks(books); 
             } catch (error) {
-                setError('Failed to fetch recommendations. Please try again later.'); // Set error message
+                setError('Failed to fetch recommendations. Please try again later.'); 
             } finally {
-                setLoading(false); // Stop loading
+                setLoading(false); 
             }
         };
 
-        fetchRecommendations(); // Call the async function
+        fetchRecommendations(); 
     }, [userId]);
 
     const handleAddToFavorites = (book) => {
@@ -43,7 +42,6 @@ const Recommendations = ({ userId }) => {
             webReaderLink: book.volumeInfo.webReaderLink || ''
         };
 
-        // Use Fetch API to post favorite book to the server
         fetch('http://localhost:5057/favorites', {
             method: 'POST',
             headers: {
@@ -69,17 +67,17 @@ const Recommendations = ({ userId }) => {
             <Navbar />
             <h1>Personalized Recommendations</h1>
             {loading ? (
-                <p>Loading recommendations...</p> // Show loading message
+                <p>Loading recommendations...</p> 
             ) : error ? (
-                <p>{error}</p> // Show error message if any
+                <p>{error}</p> 
             ) : recommendedBooks.length > 0 ? (
                 <div className="book-list">
                     {recommendedBooks.map((book, index) => (
                         <div key={index} className="book-card">
                             <a 
-                                href={book.volumeInfo.infoLink} // Link to the book's details
-                                target="_blank" // Open in a new tab
-                                rel="noopener noreferrer" // Security measure
+                                href={book.volumeInfo.infoLink} 
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 <img
                                     src={book.volumeInfo.imageLinks?.thumbnail || 'https://via.placeholder.com/128x192?text=No+Cover'}
@@ -92,7 +90,6 @@ const Recommendations = ({ userId }) => {
                                     <p>{book.volumeInfo.categories?.join(', ') || 'No categories available'}</p>
                                 </div>
                             </a>
-                            {/* Add to Favorites Button */}
                             <button className="favorite-button" onClick={() => handleAddToFavorites(book)}>
                                 ❤️ Add to Favorites
                             </button>

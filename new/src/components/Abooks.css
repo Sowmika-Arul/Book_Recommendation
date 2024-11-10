@@ -1,4 +1,4 @@
-/* Style for the search box section */
+
 .awarded-books-input {
   display: flex;
   flex-direction: column;
@@ -6,7 +6,7 @@
   padding: 10px;
   width: 100%;
   background-color: #f7f7f7;
-  z-index: 1000; /* Lower z-index than navbar */
+  z-index: 1000; 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding-top: 15px;
   box-sizing: border-box;
@@ -37,12 +37,11 @@
   background-color: #0056b3;
 }
 
-/* Content section */
 .awarded-books-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 150px; /* Give space for navbar and search bar */
+  margin-top: 150px; 
 }
 
 .awarded-books-loading, .awarded-books-error {
@@ -50,7 +49,7 @@
   color: #ff0000;
 }
 
-/* Style for the books list */
+
 .awarded-books-list {
   list-style: none;
   padding: 0;
@@ -61,7 +60,6 @@
   justify-content: center;
 }
 
-/* Style for each book item */
 .awarded-books-item {
   background-color: white;
   border-radius: 8px;
@@ -98,7 +96,6 @@
   color: #777;
 }
 
-/* Style for no results message */
 .awarded-books-no-results {
   text-align: center;
   font-size: 1rem;
@@ -106,15 +103,13 @@
   margin-top: 20px;
 }
 
-/* Media Queries */
+
 @media (max-width: 768px) {
-  /* Adjust the book grid layout for smaller screens */
   .awarded-books-list {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 20px;
   }
 
-  /* Adjust the width of the search input and button for smaller screens */
   .awarded-books-input {
     width: 100%;
     padding: 15px 10px;
@@ -125,31 +120,27 @@
     width: 100%;
   }
 
-  /* Adjust the content section margin to accommodate fixed search box */
   .awarded-books-content {
-    margin-top: 200px; /* Increased margin for smaller screen to avoid overlap */
+    margin-top: 200px; 
   }
 }
 
 @media (max-width: 480px) {
-  /* Further adjustments for very small screens */
   .awarded-books-input input,
   .awarded-books-input button {
     padding: 12px;
     font-size: 0.9rem;
   }
 
-  /* Reduce gap between books on very small screens */
   .awarded-books-list {
     gap: 10px;
   }
 }
 
-/* Flexbox for the label and input inline */
 .awarded-books-input .input-container {
   display: flex;
-  align-items: center;  /* Aligns the label and input on the same line */
-  gap: 10px;  /* Adds some space between the label and input */
+  align-items: center;  
+  gap: 10px;
   margin-bottom: 10px;
 }
 

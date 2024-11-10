@@ -14,7 +14,7 @@ const FeedbackForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
   
-    // Check if user is logged in
+
     const userId = localStorage.getItem('userId'); 
   
     useEffect(() => {
@@ -32,23 +32,22 @@ const FeedbackForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if the user is logged in before submitting
+      
         if (!userId) {
             alert('You need to be logged in to submit feedback.');
             return;
         }
 
-        // Capture the current date when submitting feedback
-        const currentDate = new Date().toISOString();  // Capture in ISO format
-        const updatedFormData = { ...formData, reviewDate: currentDate, userId };  // Include userId with the feedback
-
+      
+        const currentDate = new Date().toISOString();  
+        const updatedFormData = { ...formData, reviewDate: currentDate, userId };  
         try {
             const response = await fetch('http://localhost:5057/api/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedFormData)  // Send the updated form data with reviewDate and userId
+                body: JSON.stringify(updatedFormData)  
             });
 
             if (response.ok) {

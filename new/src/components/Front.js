@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './front.css';
 import Navbar from './Navbar.js';
 
 const FrontPage = () => {
-  const navigate = useNavigate(); // useNavigate hook for redirection
-  const userId = localStorage.getItem('userId'); // Get userId from localStorage
+  const navigate = useNavigate(); 
+  const userId = localStorage.getItem('userId'); 
 
-  // Check for userId in localStorage and redirect to login if it's not present
   useEffect(() => {
     if (!userId) {
-      navigate('/'); // Redirect to login if no userId
+      navigate('/'); 
     }
   }, [userId, navigate]);
 

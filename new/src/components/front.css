@@ -12,7 +12,7 @@ body{
   }
 
   .logout-btn {
-    background-color: #ff4d4d;  /* Red color for logout */
+    background-color: #ff4d4d;  
     color: white;
     padding: 8px 16px;
     border: none;
@@ -24,7 +24,7 @@ body{
   }
   
   .logout-btn:hover {
-    background-color: #ff1a1a;  /* Darker red on hover */
+    background-color: #ff1a1a;  
   }
   
   .logo {

@@ -8,7 +8,7 @@ body {
 }
 
 h1, h2 {
-  color: #007bff; /* Blue color for headings for a more vibrant look */
+  color: #007bff; 
   text-align: center; 
 }
 
@@ -26,11 +26,11 @@ h1, h2 {
   background-color: #ffffff; 
   border-radius: 8px; 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
-  transition: transform 0.3s; /* Add transition for hover effect */
+  transition: transform 0.3s; 
 }
 
 .profile-left:hover, .profile-right:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
+  transform: translateY(-5px); 
 }
 
 .profile-image-container {
@@ -41,11 +41,11 @@ h1, h2 {
 }
 
 .profile-pic {
-  border-radius: 50%; /* Make the image circular */
+  border-radius: 50%; 
   border: 3px solid #00ffcc; 
-  width: 250px; /* Adjust size as needed */
-  height: 250px; /* Adjust size as needed */
-  object-fit: cover; /* Ensure the image is correctly contained in the circle */
+  width: 250px; 
+  height: 250px; 
+  object-fit: cover; 
 }
 
 .profile-right input[type="text"]{
@@ -84,12 +84,12 @@ button:hover {
   margin-top: 20px; 
   font-size: 16px; 
   color: #34495e; 
-  display: flex; /* Use flexbox for alignment */
-  justify-content: center; /* Center align the follower info */
+  display: flex; 
+  justify-content: center; 
 }
 
 .follower-info p {
-  margin: 0 10px; /* Space between followers and following */
+  margin: 0 10px; 
 }
 
 .bio {

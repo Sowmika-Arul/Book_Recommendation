@@ -10,23 +10,23 @@ const FeedbackList = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
   
-    // Check if user is logged in
+
     const userId = localStorage.getItem('userId');
 
     useEffect(() => {
         if (!userId) {
-            // If user is not logged in, redirect to login page
+   
             setErrorMessage('You need to be logged in to view the feedback.');
-            navigate('/');  // You can change the route to your login page
+            navigate('/');  
         } else {
-            // Fetch feedbacks if the user is logged in
+           
             const fetchFeedbacks = async () => {
                 try {
                     const response = await fetch('http://localhost:5057/api/feedback');
                     if (response.ok) {
                         const data = await response.json();
                         setFeedbacks(data);
-                        setFilteredFeedbacks(data); // Initialize with all feedbacks
+                        setFilteredFeedbacks(data); 
                     } else {
                         console.error('Failed to fetch feedback');
                     }
@@ -39,17 +39,17 @@ const FeedbackList = () => {
         }
     }, [userId, navigate]);
 
-    // Filter feedbacks when rating filter changes
+    
     useEffect(() => {
         if (ratingFilter === 'All') {
-            setFilteredFeedbacks(feedbacks); // Show all feedbacks if no filter
+            setFilteredFeedbacks(feedbacks); 
         } else {
             const filtered = feedbacks.filter(feedback => feedback.rating === parseInt(ratingFilter));
             setFilteredFeedbacks(filtered);
         }
     }, [ratingFilter, feedbacks]);
 
-    // Format the date in a more user-friendly format
+    
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
@@ -61,10 +61,8 @@ const FeedbackList = () => {
             <div className="feedback-list-container">
                 <h2>Feedback List</h2>
 
-                {/* Display error message if not logged in */}
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-                {/* Rating Filter Dropdown */}
                 <div className="filter-container">
                     <label htmlFor="rating-filter">Filter by Rating:</label>
                     <select 
@@ -81,14 +79,12 @@ const FeedbackList = () => {
                     </select>
                 </div>
 
-                {/* Feedback List */}
                 {filteredFeedbacks.length > 0 ? (
                     filteredFeedbacks.map(feedback => (
                         <div key={feedback._id} className="feedback-item">
                             <h4>{feedback.bookTitle} by {feedback.author}</h4>
                             <p className="feedback-rating">Rating: {feedback.rating}</p>
                             <p>{feedback.comments}</p>
-                            {/* Display formatted review date */}
                             <p className="feedback-date">Submitted on: {formatDate(feedback.reviewDate)}</p>
                         </div>
                     ))

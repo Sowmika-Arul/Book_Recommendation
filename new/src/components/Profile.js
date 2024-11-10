@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Profile.css';
 
 const Profile = () => {
-    const [originalProfile, setOriginalProfile] = useState(null); // Store the original profile data
+    const [originalProfile, setOriginalProfile] = useState(null);
     const [profile, setProfile] = useState({
         name: '',
         email: '',
@@ -41,7 +41,7 @@ const Profile = () => {
                         following: data.following || 0,
                     };
                     setProfile(initialProfile);
-                    setOriginalProfile(initialProfile); // Save the initial profile data
+                    setOriginalProfile(initialProfile); 
                 })
                 .catch(error => {
                     console.error('Error fetching profile:', error);
@@ -90,7 +90,7 @@ const Profile = () => {
         .then(data => {
             alert('Profile updated!');
             setProfile(data);
-            setOriginalProfile(data); // Update originalProfile with the saved data
+            setOriginalProfile(data); 
             setIsEditing(false);
         })
         .catch(error => {
@@ -100,8 +100,8 @@ const Profile = () => {
     };
 
     const handleCancelChanges = () => {
-        setProfile(originalProfile); // Revert to the original profile data
-        setIsEditing(false); // Exit edit mode
+        setProfile(originalProfile); 
+        setIsEditing(false); 
     };
 
     return (

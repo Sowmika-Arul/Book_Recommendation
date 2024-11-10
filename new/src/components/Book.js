@@ -23,7 +23,7 @@ const BooksSearch = () => {
   ];
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault(); 
     setCurrentPage(1);
     fetchBooks(query, 0);
   };
@@ -34,7 +34,7 @@ const BooksSearch = () => {
       .then((data) => {
         if (data.items) {
           setBooks(data.items);
-          setTotalBooks(Math.min(data.totalItems, 100)); // Limit to a maximum of 100 items
+          setTotalBooks(Math.min(data.totalItems, 100)); 
           setError(null);
         } else {
           setBooks([]);
@@ -47,11 +47,10 @@ const BooksSearch = () => {
       });
   };
 
-  // Fetch books when the component mounts with a default query or selected filter
+ 
   useEffect(() => {
-    // Initial fetch (e.g., default category or 'fiction' search)
     fetchBooks('fiction', (currentPage - 1) * booksPerPage);
-  }, [currentPage]);  // Run effect when `currentPage` changes
+  }, [currentPage]);  
 
   useEffect(() => {
     if (selectedCategory) {
@@ -63,7 +62,7 @@ const BooksSearch = () => {
     } else {
       setBooks([]);
     }
-  }, [selectedCategory, selectedAuthor, query, currentPage]);  // Trigger fetch on category, author, or query change
+  }, [selectedCategory, selectedAuthor, query, currentPage]); 
 
   const handlePageChange = (direction) => {
     if (direction === 'next' && currentPage < Math.ceil(totalBooks / booksPerPage)) {
@@ -71,8 +70,8 @@ const BooksSearch = () => {
     } else if (direction === 'prev' && currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
-    // Prevent default form submission that might cause scroll jump
-    window.scrollTo(0, 0);  // Scroll to the top to avoid jumpy behavior
+
+    window.scrollTo(0, 0); 
   };
 
   const handleAddToFavorites = (book) => {

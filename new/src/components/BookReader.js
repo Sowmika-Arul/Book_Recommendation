@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom'; 
 import './BookReader.css';
 import Navbar from './Navbar.js';
 
@@ -8,23 +8,23 @@ function App() {
   const [bookDetails, setBookDetails] = useState(null);
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false); 
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate(); 
 
-  // Check if userId exists in localStorage on component mount
+ 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-      navigate('/'); // Redirect to login if userId is not found
+      navigate('/'); 
     }
-  }, [navigate]); // Run only once on component mount
+  }, [navigate]); 
 
   const handleSearch = (event) => {
     event.preventDefault();
     setMessage('');
     setBookDetails(null);
-    setShowModal(false); // Hide modal on new search
+    setShowModal(false); 
 
-    // Fetch data from Gutendex API
+   
     fetch(`https://gutendex.com/books?search=${encodeURIComponent(query)}`)
       .then(response => response.json())
       .then(data => {
@@ -56,11 +56,11 @@ function App() {
   };
 
   const handleOpenModal = () => {
-    setShowModal(true); // Open modal
+    setShowModal(true); 
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Close modal
+    setShowModal(false); 
   };
 
   return (

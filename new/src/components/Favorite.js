@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar.js';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';  
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(null);
-  const navigate = useNavigate();  // Hook for navigation
+  const navigate = useNavigate();  
 
   useEffect(() => {
-    // Check if userId exists in localStorage
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       setUserId(storedUserId);
     } else {
       setError('User ID not found in local storage');
       setLoading(false);
-      navigate('/'); // Redirect to login if no userId found
+      navigate('/');
     }
-  }, [navigate]);  // Added navigate as a dependency
+  }, [navigate]); 
 
   useEffect(() => {
     if (userId) {
@@ -53,7 +52,7 @@ const FavoritesPage = () => {
         throw new Error('Failed to delete favorite');
       }
 
-      // Filter out the deleted favorite from the state
+
       setFavorites((prevFavorites) => prevFavorites.filter(favorite => favorite._id !== favoriteId));
     } catch (err) {
       setError(err.message);

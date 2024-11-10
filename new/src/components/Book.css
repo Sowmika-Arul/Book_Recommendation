@@ -1,4 +1,4 @@
-/* Container for the whole app */
+
 .book-search-container {
   display: flex;
   max-width: 1200px;
@@ -7,7 +7,7 @@
   font-family: 'Arial', sans-serif;
 }
 
-/* Sidebar for categories */
+
 .sidebar {
   width: 200px;
   padding: 20px;
@@ -18,14 +18,14 @@
   margin-top: 150px;
 }
 
-/* Sidebar headings */
+
 .sidebar h2 {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
-/* Sidebar lists */
+
 .sidebar ul {
   list-style-type: none;
   padding: 0;
@@ -37,7 +37,7 @@
   font-size: 14px;
 }
 
-/* Checkbox label */
+
 .sidebar label {
   cursor: pointer;
   display: flex;
@@ -48,12 +48,11 @@
   margin-right: 10px;
 }
 
-/* Main content area */
 .main-content {
   flex: 1;
 }
 
-/* Form styling */
+
 form {
   margin-bottom: 30px;
   display: flex;
@@ -61,7 +60,7 @@ form {
   align-items: center;
 }
 
-/* Input field styling */
+
 input[type="text"] {
   padding: 10px 20px;
   width: 70%;
@@ -78,7 +77,7 @@ input[type="text"]:focus {
   outline: none;
 }
 
-/* Button styling */
+
 button {
   padding: 10px 20px;
   background-color: #333;
@@ -94,7 +93,7 @@ button:hover {
   background-color: #555;
 }
 
-/* Book list container */
+
 .book-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -103,7 +102,7 @@ button:hover {
   margin-top: 20px;
 }
 
-/* Book item styling */
+
 .book-item {
   background-color: #f9f9f9;
   padding: 20px;
@@ -122,7 +121,7 @@ button:hover {
   transform: translateY(-10px);
 }
 
-/* Book image styling */
+
 .book-item img {
   width: 180px;
   height: 220px;
@@ -130,14 +129,14 @@ button:hover {
   margin-bottom: 10px;
 }
 
-/* Book title */
+
 .book-item h3 {
   font-size: 16px;
   color: #333;
   margin: 10px 0;
 }
 
-/* Book metadata */
+
 .book-item p {
   margin: 5px 0;
   font-size: 14px;
@@ -149,14 +148,14 @@ button:hover {
   color: #000;
 }
 
-/* Error message */
+
 .error-message {
   font-size: 16px;
   color: red;
   text-align: center;
 }
 
-/* Pagination styling */
+
 .pagination {
   display: flex;
   justify-content: flex-end;
@@ -190,7 +189,7 @@ button:hover {
   font-size: 14px;
 }
 
-/* Favorite button styling */
+
 .favorite-button {
   background-color: white;
   color: black;

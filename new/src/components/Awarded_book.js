@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
-import './Abooks.css'; // Updated file name
+import { useNavigate } from 'react-router-dom'; 
+import './Abooks.css'; 
 import Navbar from './Navbar.js';
 
 const AwardedBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [year, setYear] = useState('2023'); // Default year set to 2023
-  const [userId, setUserId] = useState(null); // User ID state
-  const navigate = useNavigate(); // Initialize the navigate function
+  const [year, setYear] = useState('2023'); 
+  const [userId, setUserId] = useState(null); 
+  const navigate = useNavigate(); 
 
   const fetchAwardedBooks = async (year) => {
     const API_KEY = '0ecc576b47mshbc0ab5d515aa6eep1d1dbajsnfa44d559c207';
@@ -44,24 +44,23 @@ const AwardedBooks = () => {
 
   const handleSearch = () => {
     if (year && year > 0) {
-      setError(null); // Clear previous errors
+      setError(null); 
       fetchAwardedBooks(year);
     } else {
       setError('Please enter a valid year.');
     }
   };
 
-  // Check if the userId exists in localStorage when the component mounts
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       setUserId(storedUserId);
-      fetchAwardedBooks(year); // Fetch books if user is logged in
+      fetchAwardedBooks(year); 
     } else {
       setError('User not logged in. Redirecting to login page...');
-      navigate('/'); // Redirect to login page if userId is not found
+      navigate('/');
     }
-  }, [year, navigate]); // Only re-fetch when the year changes or navigate function changes
+  }, [year, navigate]); 
 
   return (
     <div className="awarded-books-container">
@@ -84,7 +83,7 @@ const AwardedBooks = () => {
 
       <h1><center>Awarded Books of the Year</center></h1>
 
-      {/* Dynamic content area */}
+
       <div className="awarded-books-content">
         {loading && <p className="awarded-books-loading">Loading...</p>}
         {error && <p className="awarded-books-error">Error: {error}</p>}
