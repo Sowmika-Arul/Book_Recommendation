@@ -1,236 +1,273 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import './Profile.css';
+import React, { useState, useEffect } from 'react';
+import './Book.css';
+import Navbar from './Navbar.js';
 
-const Profile = () => {
-    const [profile, setProfile] = useState({
-        name: '',
-        email: '',
-        photo: '',
-        bio: '',
-        favoriteBooks: [],
-        favoriteGenres: [],
-        favoriteAuthors: [],
-        themes: [],
-        followers: 0,
-        following: 0,
-    });
+const BooksSearch = () => {
+  const [query, setQuery] = useState('');
+  const [books, setBooks] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedAuthor, setSelectedAuthor] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalBooks, setTotalBooks] = useState(0);
+  const booksPerPage = 12;
+  const apiKey = 'AIzaSyB1ZDjfU1JjNa8SE57ojxvCfQiHrBbCPy4'; 
+  const userId = localStorage.getItem('userId');
 
-    const [isEditing, setIsEditing] = useState(false); // State for toggling edit mode
-    const [userId, setUserId] = useState(localStorage.getItem('userId') || ''); // Retrieve userId from localStorage
-    const navigate = useNavigate(); // useNavigate hook for redirection
+  const categories = [
+    'Fiction', 'Science', 'Technology', 'History', 'Mystery', 'Romance', 'Fantasy', 'Biography', 'Self-Help',
+  ];
 
-    // Check for userId in localStorage and redirect to login if it's not present
-    useEffect(() => {
-        if (!userId) {
-            navigate('/'); // Redirect to login if no userId
+  const authors = [
+    'J.K. Rowling', 'Stephen King', 'Isaac Asimov', 'Agatha Christie', 'J.R.R. Tolkien', 'George R.R. Martin', 'Ernest Hemingway',
+  ];
+
+  // Fetch favorites when the component mounts
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+
+  const fetchFavorites = () => {
+    fetch(`http://localhost:5057/favorites/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {   console.log("Fetched favorites:", data); 
+        setFavorites(data)})
+      .catch((error) => console.error('Error fetching favorites:', error));
+  };
+
+  const isFavorite = (bookId) => {
+    return favorites.some((fav) => fav.book && fav.book.id === bookId);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    fetchBooks(query, 0);
+  };
+
+  const fetchBooks = (query, startIndex) => {
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&startIndex=${startIndex}&maxResults=${booksPerPage}&key=${apiKey}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.items) {
+          setBooks(data.items);
+          setTotalBooks(Math.min(data.totalItems, 100));
+          setError(null);
         } else {
-            // Fetch profile data if userId exists
-            fetch(`http://localhost:5057/api/profile/${userId}`)
-                .then(res => res.json())
-                .then(data => {
-                    setProfile({
-                        name: data.name || '',
-                        email: data.email || '',
-                        photo: data.photo || '',
-                        bio: data.bio || '',
-                        favoriteBooks: data.favoriteBooks || [],
-                        favoriteGenres: data.favoriteGenres || [],
-                        favoriteAuthors: data.favoriteAuthors || [],
-                        themes: data.themes || [],
-                        followers: data.followers || 0,
-                        following: data.following || 0,
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching profile:', error);
-                });
+          setBooks([]);
+          setError('No books found');
         }
-    }, [userId, navigate]); // Only run once on mount or when userId changes
+      })
+      .catch((error) => {
+        setError('Error fetching books');
+        console.error('Error fetching books:', error);
+      });
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProfile(prevProfile => ({
-            ...prevProfile,
-            [name]: name === 'favoriteBooks' || name === 'favoriteGenres' || name === 'favoriteAuthors' || name === 'themes'
-                ? value.split(',').map(item => item.trim())
-                : value,
-        }));
+  useEffect(() => {
+    fetchBooks('fiction', (currentPage - 1) * booksPerPage);
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      fetchBooks(`subject:${selectedCategory}`, (currentPage - 1) * booksPerPage);
+    } else if (selectedAuthor) {
+      fetchBooks(`inauthor:${selectedAuthor}`, (currentPage - 1) * booksPerPage);
+    } else if (query) {
+      fetchBooks(query, (currentPage - 1) * booksPerPage);
+    } else {
+      setBooks([]);
+    }
+  }, [selectedCategory, selectedAuthor, query, currentPage]);
+
+  const handlePageChange = (direction) => {
+    if (direction === 'next' && currentPage < Math.ceil(totalBooks / booksPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    } else if (direction === 'prev' && currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+    window.scrollTo(0, 0);
+  };
+
+  const handleAddToFavorites = (book) => {
+    const bookData = {
+      id: book.id,
+      title: book.volumeInfo.title,
+      authors: book.volumeInfo.authors || [],
+      publisher: book.volumeInfo.publisher || 'Unknown',
+      publishedDate: book.volumeInfo.publishedDate || 'Unknown',
+      thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : '',
+      webReaderLink: book.volumeInfo.infoLink || '',
     };
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfile(prevProfile => ({
-                    ...prevProfile,
-                    photo: reader.result,
-                }));
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handleSaveChanges = () => {
-        fetch('http://localhost:5057/api/profile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userId, ...profile }),
-        })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json();
-        })
-        .then(data => {
-            alert('Profile updated!');
-            setProfile(data);
-            setIsEditing(false); // Exit edit mode after successful submission
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert(`Failed to update profile: ${error.message}`);
-        });
-    };
-
-    return (
-        <div className="profile-container">
-            <div className="profile-left">
-                <div className="profile-image-container">
-                    {profile.photo ? (
-                        <img src={profile.photo} alt="Profile" className="profile-pic" />
-                    ) : (
-                        <img src="https://via.placeholder.com/150" alt="Default" className="profile-pic" />
-                    )}
-                </div>
-                <h2>{profile.name}</h2>
-                <p><center>{profile.email}</center></p>
-                <p className="bio">{profile.bio}</p>
-                <div className="follower-info">
-                    <p><strong>Followers:</strong> {profile.followers}</p>
-                    <p><strong>Following:</strong> {profile.following}</p>
-                </div><br></br>
-                <center><Link to="/recommendations">
-                    <button type="button">View Recommendations</button>
-                </Link></center>
-            </div>
-            <div className="profile-right">
-    <form>
-        <h1>Profile Details</h1>
-        <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={profile.name}
-            onChange={handleChange}
-            disabled={!isEditing}
-        />
-        <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={profile.email}
-            onChange={handleChange}
-            disabled={!isEditing}
-        />
-        <input
-            type="text"
-            name="bio"
-            placeholder="Bio"
-            value={profile.bio}
-            onChange={handleChange}
-            disabled={!isEditing}
-        />
-        <input
-            type="file"
-            name="photo"
-            accept="image/*"
-            onChange={handleFileChange}
-            disabled={!isEditing}
-        />
-        
-        <h2>Favorite Details</h2>
-        <div className="favorites-container">
-            {/* Favorite Books */}
-            <div className="favorites-item">
-                <h3><i className="fa fa-book"></i> Favorite Books</h3>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="favoriteBooks"
-                        placeholder="Favorite Books (comma separated)"
-                        value={profile.favoriteBooks.join(', ')}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{profile.favoriteBooks.join(', ') || "No favorite books added."}</p>
-                )}
-            </div>
-
-            {/* Favorite Genres */}
-            <div className="favorites-item">
-                <h3><i className="fa fa-tags"></i> Favorite Genres</h3>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="favoriteGenres"
-                        placeholder="Favorite Genres (comma separated)"
-                        value={profile.favoriteGenres.join(', ')}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{profile.favoriteGenres.join(', ') || "No favorite genres added."}</p>
-                )}
-            </div>
-
-            {/* Favorite Authors */}
-            <div className="favorites-item">
-                <h3><i className="fa fa-pencil-alt"></i> Favorite Authors</h3>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="favoriteAuthors"
-                        placeholder="Favorite Authors (comma separated)"
-                        value={profile.favoriteAuthors.join(', ')}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{profile.favoriteAuthors.join(', ') || "No favorite authors added."}</p>
-                )}
-            </div>
-
-            {/* Themes */}
-            <div className="favorites-item">
-                <h3><i className="fa fa-lightbulb"></i> Themes</h3>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="themes"
-                        placeholder="Themes (comma separated)"
-                        value={profile.themes.join(', ')}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{profile.themes.join(', ') || "No themes added."}</p>
-                )}
-            </div>
-        </div>
-
-        {/* Edit or Save Button */}
-        {!isEditing ? (
-            <button onClick={() => setIsEditing(true)} style={{marginTop: '10px'}}>Edit</button>
-        ) : (
-            <button type="button" onClick={handleSaveChanges}>Save Changes</button>
-        )}
-    </form>
-</div>
+    console.log('Book Data:', bookData);
   
+    if (isFavorite(book.id)) {
+      // Remove from favorites
+      const favoriteToRemove = favorites.find((fav) => fav.book.id === book.id);
+      if (!favoriteToRemove) return; // Ensure the favorite exists
+
+      fetch(`http://localhost:5057/favorites/${favoriteToRemove._id}`, {
+        method: 'DELETE',
+      })
+        .then((response) => response.json())
+        .then(() => {
+          // Optimistically update the favorites state
+          setFavorites((prevFavorites) =>
+            prevFavorites.filter((fav) => fav.book.id !== book.id)
+          );
+          alert('Book removed from favorites');
+        })
+        .catch((error) => {
+          console.error('Error removing book from favorites:', error);
+        });
+    } else {
+      // Add to favorites
+      fetch('http://localhost:5057/favorites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          book: bookData,
+        }),
+      })
+        .then((response) => response.json())
+        .then((newFavorite) => {
+          // Optimistically update the favorites state
+          setFavorites((prevFavorites) => [...prevFavorites, { book: bookData, _id: newFavorite._id }]);
+          alert('Book added to favorites');
+        })
+        .catch((error) => {
+          console.error('Error adding book to favorites:', error);
+        });
+    }
+  };
+
+  const generateWhatsAppLink = (book) => {
+    const title = book.volumeInfo.title || 'Check out this book!';
+    const link = book.volumeInfo.infoLink || window.location.href;
+    return `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + link)}`;
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <div className="book-search-container">
+        <div className="sidebar">
+          <h2>Categories</h2>
+          <ul>
+            {categories.map((category, index) => (
+              <li key={index}>
+                <label>
+                  <input
+                    type="radio"
+                    checked={selectedCategory === category}
+                    onChange={() => {
+                      setSelectedCategory(category);
+                      setSelectedAuthor('');
+                      setQuery('');
+                      setCurrentPage(1);
+                    }}
+                  />
+                  {category}
+                </label>
+              </li>
+            ))}
+          </ul>
+
+          <h2>Authors</h2>
+          <ul>
+            {authors.map((author, index) => (
+              <li key={index}>
+                <label>
+                  <input
+                    type="radio"
+                    checked={selectedAuthor === author}
+                    onChange={() => {
+                      setSelectedAuthor(author);
+                      setSelectedCategory('');
+                      setQuery('');
+                      setCurrentPage(1);
+                    }}
+                  />
+                  {author}
+                </label>
+              </li>
+            ))}
+          </ul>
         </div>
-    );
+
+        <div className="main-content">
+          <h1>Book Search</h1>
+
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Enter book title or author"
+            />
+            <button type="submit">Search</button>
+          </form>
+
+          {error && <p className="error-message">{error}</p>}
+
+          <div className="book-list">
+            {books.length > 0 &&
+              books.map((book, index) => {
+                const { title, authors, publisher, publishedDate, imageLinks, infoLink } = book.volumeInfo;
+                return (
+                  <div key={index} className="book-item">
+                    {imageLinks && imageLinks.thumbnail && (
+                      <center>
+                        <img src={imageLinks.thumbnail} alt={`Cover of ${title}`} />
+                      </center>
+                    )}
+                    <h3>{title || 'No title'}</h3>
+                    <p><strong>Authors:</strong> {authors ? authors.join(', ') : 'No authors'}</p>
+                    <p><strong>Publisher:</strong> {publisher || 'No publisher'}</p>
+                    <p><strong>Published Date:</strong> {publishedDate || 'No published date'}</p>
+
+                    {infoLink && (
+                      <p>
+                        <a href={infoLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                          Read Online
+                        </a>
+                      </p>
+                    )}
+
+                    <button
+                      className="favorite-button"
+                      onClick={() => handleAddToFavorites(book)}
+                    >
+                      {isFavorite(book.id) ? '❌ Remove from Favorites' : '❤️ Add to Favorites'}
+                    </button>
+
+                    <a href={generateWhatsAppLink(book)} target="_blank" rel="noopener noreferrer">
+                      <button className="whatsapp-button">📤 Share on WhatsApp</button>
+                    </a>
+                  </div>
+                );
+              })}
+          </div>
+
+          {totalBooks > booksPerPage && (
+            <div className="pagination">
+              <button onClick={() => handlePageChange('prev')} disabled={currentPage === 1}>
+                Previous
+              </button>
+              <span>Page {currentPage} of {Math.ceil(totalBooks / booksPerPage)}</span>
+              <button onClick={() => handlePageChange('next')} disabled={currentPage === Math.ceil(totalBooks / booksPerPage)}>
+                Next
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default Profile;
+export default BooksSearch;

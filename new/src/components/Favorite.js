@@ -83,7 +83,14 @@ const FavoritesPage = () => {
                   <h3>{favorite.book.title}</h3>
                   <p><strong>Author:</strong> {favorite.book.authors.join(', ')}</p>
                   <p><strong>Published:</strong> {favorite.book.publishedDate}</p>
-                  <button className="fav-delete-button" onClick={() => handleDelete(favorite._id)}>
+                  <p><strong>Read Book:</strong> 
+  {favorite.book.webReaderLink ? 
+    <a href={favorite.book.webReaderLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#007bff' }}>
+       click here
+    </a> 
+    : 'Not Available'}
+</p>
+               <button className="fav-delete-button" onClick={() => handleDelete(favorite._id)}>
                     Remove
                   </button>
                 </div>

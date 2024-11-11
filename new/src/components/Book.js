@@ -5,13 +5,14 @@ import Navbar from './Navbar.js';
 const BooksSearch = () => {
   const [query, setQuery] = useState('');
   const [books, setBooks] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedAuthor, setSelectedAuthor] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalBooks, setTotalBooks] = useState(0);
   const booksPerPage = 12;
-  const apiKey = 'AIzaSyB1ZDjfU1JjNa8SE57ojxvCfQiHrBbCPy4';
+  const apiKey = 'AIzaSyB1ZDjfU1JjNa8SE57ojxvCfQiHrBbCPy4'; 
   const userId = localStorage.getItem('userId');
 
   const categories = [
@@ -22,8 +23,29 @@ const BooksSearch = () => {
     'J.K. Rowling', 'Stephen King', 'Isaac Asimov', 'Agatha Christie', 'J.R.R. Tolkien', 'George R.R. Martin', 'Ernest Hemingway',
   ];
 
+  // Fetch favorites when the component mounts
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+
+  const fetchFavorites = () => {
+    fetch(`http://localhost:5057/favorites/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {   console.log("Fetched favorites:", data); 
+        setFavorites(Array.isArray(data) ? data : []);})
+      .catch((error) => console.error('Error fetching favorites:', error));
+  };
+
+  const isFavorite = (bookId) => {
+    // Ensure favorites is an array before calling .some()
+    if (!Array.isArray(favorites)) {
+      return false;
+    }
+    return favorites.some((fav) => fav.book && fav.book.id === bookId);
+  };
+
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setCurrentPage(1);
     fetchBooks(query, 0);
   };
@@ -34,7 +56,7 @@ const BooksSearch = () => {
       .then((data) => {
         if (data.items) {
           setBooks(data.items);
-          setTotalBooks(Math.min(data.totalItems, 100)); 
+          setTotalBooks(Math.min(data.totalItems, 100));
           setError(null);
         } else {
           setBooks([]);
@@ -47,10 +69,9 @@ const BooksSearch = () => {
       });
   };
 
- 
   useEffect(() => {
     fetchBooks('fiction', (currentPage - 1) * booksPerPage);
-  }, [currentPage]);  
+  }, [currentPage]);
 
   useEffect(() => {
     if (selectedCategory) {
@@ -62,7 +83,7 @@ const BooksSearch = () => {
     } else {
       setBooks([]);
     }
-  }, [selectedCategory, selectedAuthor, query, currentPage]); 
+  }, [selectedCategory, selectedAuthor, query, currentPage]);
 
   const handlePageChange = (direction) => {
     if (direction === 'next' && currentPage < Math.ceil(totalBooks / booksPerPage)) {
@@ -70,8 +91,7 @@ const BooksSearch = () => {
     } else if (direction === 'prev' && currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
-
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
   };
 
   const handleAddToFavorites = (book) => {
@@ -82,32 +102,57 @@ const BooksSearch = () => {
       publisher: book.volumeInfo.publisher || 'Unknown',
       publishedDate: book.volumeInfo.publishedDate || 'Unknown',
       thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : '',
-      webReaderLink: book.volumeInfo.webReaderLink || ''
+      webReaderLink: book.volumeInfo.infoLink || '',
     };
+    console.log('Book Data:', bookData);
+  
+    if (isFavorite(book.id)) {
+      // Remove from favorites
+      const favoriteToRemove = favorites.find((fav) => fav.book.id === book.id);
+      if (!favoriteToRemove) return; // Ensure the favorite exists
 
-    fetch('http://localhost:5057/favorites', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userId,
-        book: bookData
+      fetch(`http://localhost:5057/favorites/${favoriteToRemove._id}`, {
+        method: 'DELETE',
       })
-    })
-    .then(response => response.json())
-    .then(data => {
-      alert('Book added to favorites');
-    })
-    .catch(error => {
-      console.error('Error adding book to favorites:', error);
-    });
+        .then((response) => response.json())
+        .then(() => {
+          // Optimistically update the favorites state
+          setFavorites((prevFavorites) =>
+            prevFavorites.filter((fav) => fav.book.id !== book.id)
+          );
+          alert('Book removed from favorites');
+        })
+        .catch((error) => {
+          console.error('Error removing book from favorites:', error);
+        });
+    } else {
+      // Add to favorites
+      fetch('http://localhost:5057/favorites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          book: bookData,
+        }),
+      })
+        .then((response) => response.json())
+        .then((newFavorite) => {
+          // Optimistically update the favorites state
+          setFavorites((prevFavorites) => [...prevFavorites, { book: bookData, _id: newFavorite._id }]);
+          alert('Book added to favorites');
+        })
+        .catch((error) => {
+          console.error('Error adding book to favorites:', error);
+        });
+    }
   };
 
   const generateWhatsAppLink = (book) => {
     const title = book.volumeInfo.title || 'Check out this book!';
     const link = book.volumeInfo.infoLink || window.location.href;
-    return `https://api.whatsapp.com/send?text=${encodeURIComponent(title + " " + link)}`;
+    return `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + link)}`;
   };
 
   return (
@@ -180,23 +225,28 @@ const BooksSearch = () => {
                 return (
                   <div key={index} className="book-item">
                     {imageLinks && imageLinks.thumbnail && (
-                      <center><img src={imageLinks.thumbnail} alt={`Cover of ${title}`} /></center>
+                      <center>
+                        <img src={imageLinks.thumbnail} alt={`Cover of ${title}`} />
+                      </center>
                     )}
                     <h3>{title || 'No title'}</h3>
                     <p><strong>Authors:</strong> {authors ? authors.join(', ') : 'No authors'}</p>
                     <p><strong>Publisher:</strong> {publisher || 'No publisher'}</p>
                     <p><strong>Published Date:</strong> {publishedDate || 'No published date'}</p>
-                    
+
                     {infoLink && (
                       <p>
-                        <a href={infoLink} target="_blank" rel="noopener noreferrer" style={{textDecoration : 'none'}}>
+                        <a href={infoLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                           Read Online
                         </a>
                       </p>
                     )}
-                    
-                    <button className="favorite-button" onClick={() => handleAddToFavorites(book)}>
-                      ❤️ Add to Favorites
+
+                    <button
+                      className="favorite-button"
+                      onClick={() => handleAddToFavorites(book)}
+                    >
+                      {isFavorite(book.id) ? '❌ Remove from Favorites' : '❤️ Add to Favorites'}
                     </button>
 
                     <a href={generateWhatsAppLink(book)} target="_blank" rel="noopener noreferrer">
