@@ -176,7 +176,7 @@ const BooksSearch = () => {
           <div className="book-list">
             {books.length > 0 &&
               books.map((book, index) => {
-                const { title, authors, publisher, publishedDate, imageLinks, webReaderLink } = book.volumeInfo;
+                const { title, authors, publisher, publishedDate, imageLinks, infoLink } = book.volumeInfo;
                 return (
                   <div key={index} className="book-item">
                     {imageLinks && imageLinks.thumbnail && (
@@ -187,9 +187,9 @@ const BooksSearch = () => {
                     <p><strong>Publisher:</strong> {publisher || 'No publisher'}</p>
                     <p><strong>Published Date:</strong> {publishedDate || 'No published date'}</p>
                     
-                    {webReaderLink && (
+                    {infoLink && (
                       <p>
-                        <a href={webReaderLink} target="_blank" rel="noopener noreferrer">
+                        <a href={infoLink} target="_blank" rel="noopener noreferrer" style={{textDecoration : 'none'}}>
                           Read Online
                         </a>
                       </p>
