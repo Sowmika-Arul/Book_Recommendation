@@ -39,7 +39,7 @@ const Recommendations = ({ userId }) => {
             publisher: book.volumeInfo.publisher || 'Unknown',
             publishedDate: book.volumeInfo.publishedDate || 'Unknown',
             thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : '',
-            webReaderLink: book.volumeInfo.webReaderLink || ''
+            webReaderLink: book.volumeInfo.infoLink || ''
         };
 
         fetch('http://localhost:5057/favorites', {

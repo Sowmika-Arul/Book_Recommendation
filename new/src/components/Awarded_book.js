@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom'; 
 import './Abooks.css'; 
 import Navbar from './Navbar.js';
 
@@ -93,13 +93,13 @@ const AwardedBooks = () => {
         <ul className="awarded-books-list">
           {books.map((book) => (
             <li key={book.book_id} className="awarded-books-item">
-              <a href={book.url} target="_blank" rel="noopener noreferrer" className="awarded-books-link">
+              <Link to={book.url} target="_blank" rel="noopener noreferrer" className="awarded-books-link">
                 <img src={book.cover} alt={book.name} className="awarded-books-cover" />
                 <h3 className="awarded-books-title-item">{book.name}</h3>
                 <p className="awarded-books-category">
                   {book.category ? book.category : 'Unknown Category'}
                 </p>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

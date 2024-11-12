@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar.js';
-import { useNavigate } from 'react-router-dom';  
+import { useNavigate, Link } from 'react-router-dom';  
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
@@ -85,9 +85,9 @@ const FavoritesPage = () => {
                   <p><strong>Published:</strong> {favorite.book.publishedDate}</p>
                   <p><strong>Read Book:</strong> 
   {favorite.book.webReaderLink ? 
-    <a href={favorite.book.webReaderLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#007bff' }}>
+    <Link to={favorite.book.webReaderLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#007bff' }}>
        click here
-    </a> 
+    </Link> 
     : 'Not Available'}
 </p>
                <button className="fav-delete-button" onClick={() => handleDelete(favorite._id)}>

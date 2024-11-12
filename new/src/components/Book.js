@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Book.css';
 import Navbar from './Navbar.js';
+import {Link} from 'react-router-dom';
 
 const BooksSearch = () => {
   const [query, setQuery] = useState('');
@@ -236,9 +237,9 @@ const BooksSearch = () => {
 
                     {infoLink && (
                       <p>
-                        <a href={infoLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                        <Link to={infoLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                           Read Online
-                        </a>
+                        </Link>
                       </p>
                     )}
 
@@ -249,9 +250,9 @@ const BooksSearch = () => {
                       {isFavorite(book.id) ? '❌ Remove from Favorites' : '❤️ Add to Favorites'}
                     </button>
 
-                    <a href={generateWhatsAppLink(book)} target="_blank" rel="noopener noreferrer">
+                    <Link to={generateWhatsAppLink(book)} target="_blank" rel="noopener noreferrer">
                       <button className="whatsapp-button">📤 Share on WhatsApp</button>
-                    </a>
+                    </Link>
                   </div>
                 );
               })}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './audio.css';
+import {Link} from 'react-router-dom';
 
 const AudiobooksList = () => {
   const [audiobooks, setAudiobooks] = useState([]);  
@@ -86,22 +87,20 @@ const AudiobooksList = () => {
 
             <div className="button-container">
 
-              <a 
-                href={audiobook.url_librivox} 
+              <Link to={audiobook.url_librivox} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn audiobook-button"
               >
                 Listen to the audio
-              </a>
+              </Link>
 
-              <a 
-                href={audiobook.url_zip_file || audiobook.url_iarchive} 
+              <Link to={audiobook.url_zip_file || audiobook.url_iarchive} 
                 download 
                 className="btn download-button"
               >
                 Download the Audio
-              </a>
+              </Link>
             </div>
           </div>
         ))}

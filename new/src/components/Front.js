@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import {Link, useNavigate } from 'react-router-dom'; 
 import './front.css';
 import Navbar from './Navbar.js';
 
@@ -24,7 +24,7 @@ const FrontPage = () => {
             books with all possible categories, take advantage of the 50% discount
             and much more.
           </p>
-         <a href="/book"><button className="explore-btn">Explore Now</button></a>
+         <Link to="/book"><button className="explore-btn">Explore Now</button></Link>
         </div>
 
         <div className="right-side">
