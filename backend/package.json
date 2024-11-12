@@ -5,6 +5,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "preinstall": "npm cache clean --force",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
