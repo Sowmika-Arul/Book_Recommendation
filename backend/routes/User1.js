@@ -3,46 +3,42 @@ import User1 from '../models/User1.js';
 
 const router = express.Router();
 
-// Create or update user profile
 router.post('/', async (req, res) => {
-    const { userId, name, email, photo, bio, favoriteBooks, favoriteGenres, favoriteAuthors, themes, followers, following } = req.body;
+    const { userId, name, email, photo, bio, favoriteBooks, favoriteGenres, favoriteAuthors, themes } = req.body;
 
     try {
-        // Use findOneAndUpdate to either update the existing user or create a new one
         const user = await User1.findOneAndUpdate(
             { userId },
             { 
                 name, 
                 email, 
                 photo, 
-                bio, // Update bio
+                bio, 
                 favoriteBooks, 
                 favoriteGenres, 
                 favoriteAuthors, 
-                themes,
-                followers: followers || 0, // Use provided followers count or default to 0
-                following: following || 0, // Use provided following count or default to 0
+                themes
             },
-            { new: true, upsert: true } // upsert: true means create if not found
+            { new: true, upsert: true } 
         );
-        res.status(200).json(user); // Respond with the updated or created user
+        res.status(200).json(user); 
     } catch (error) {
-        res.status(500).json({ message: error.message }); // Handle any errors
+        res.status(500).json({ message: error.message }); 
     }
 });
 
-// Fetch user profile by userId
+
 router.get('/:userId', async (req, res) => {
-    const { userId } = req.params; // Get userId from request parameters
+    const { userId } = req.params; 
 
     try {
-        const user = await User1.findOne({ userId }); // Find user by userId
+        const user = await User1.findOne({ userId }); 
         if (!user) {
-            return res.status(404).json({ message: 'User not found' }); // If no user found
+            return res.status(404).json({ message: 'User not found' }); 
         }
-        res.status(200).json(user); // Respond with user data
+        res.status(200).json(user); 
     } catch (error) {
-        res.status(500).json({ message: error.message }); // Handle any errors
+        res.status(500).json({ message: error.message }); 
     }
 });
 

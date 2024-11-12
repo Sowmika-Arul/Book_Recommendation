@@ -14,10 +14,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  favorites: [{
-    type: String, // Store book IDs as strings if you are not storing detailed book information
-  }]
+  }
 });
 
 // Hash password before saving

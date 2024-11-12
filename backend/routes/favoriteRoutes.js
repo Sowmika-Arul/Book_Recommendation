@@ -4,7 +4,6 @@ import Favorite from '../models/favoriteBook.js';
 
 const router = express.Router();
 
-// POST a favorite book
 router.post('/', async (req, res) => {
   const { userId, book } = req.body;
 
@@ -17,7 +16,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET favorites for a specific user
 router.get('/:userId', async (req, res) => {
   const { userId } = req.params;
 

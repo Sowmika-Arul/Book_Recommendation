@@ -6,14 +6,14 @@ const router = express.Router();
 dotenv.config();
 
 router.post('/', async (req, res) => {
-    const { bookTitle, author, rating, comments, reviewDate } = req.body; // Include reviewDate
+    const { bookTitle, author, rating, comments, reviewDate } = req.body; 
 
     const newFeedback = new Feedback({
         bookTitle,
         author,
         rating,
         comments,
-        reviewDate // Set reviewDate from the request body if provided
+        reviewDate 
     });
 
     try {
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// GET route to fetch all feedback
+
 router.get('/', async (req, res) => {
     try {
         const feedbacks = await Feedback.find();
