@@ -37,7 +37,6 @@ const BooksSearch = () => {
   };
 
   const isFavorite = (bookId) => {
-    // Ensure favorites is an array before calling .some()
     if (!Array.isArray(favorites)) {
       return false;
     }
@@ -204,14 +203,15 @@ const BooksSearch = () => {
         </div>
 
         <div className="main-content">
-          <h1>Book Search</h1>
-
-          <form onSubmit={handleSubmit}>
+          <h1 style={{marginTop: '-20px', fontSize: '25px'}}>Search Books</h1>
+      
+          <form onSubmit={handleSubmit} style={{display: 'inline'}}>
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Enter book title or author"
+              style={{marginRight: '10px' , marginLeft: '150px'}}
             />
             <button type="submit">Search</button>
           </form>

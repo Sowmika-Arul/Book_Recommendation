@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="logo">Book Recommendation</div>
+      <div className="logo">BOOKSPOT</div>
       <ul className="nav-links">
       <li><Link to="/front">Home</Link></li>
         <li><Link to="/feedback">Reviews</Link></li>

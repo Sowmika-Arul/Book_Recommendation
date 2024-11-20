@@ -1,8 +1,6 @@
-
-
 .app-container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 40px 25px;
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -116,7 +114,7 @@
 }
 
 .book-iframe {
-    width: 80%;
+    width: 85%;
     height: 650px;
     margin-top: 25px;
     border: 1px solid #ccd5e1;
@@ -148,7 +146,7 @@
     position: relative;
     background-color: #fff;
     padding: 25px;
-    width: 85%;
+    width: 30%;
     max-width: 700px;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);

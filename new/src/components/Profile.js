@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Profile.css';
+import Navbar from './Navbar.js';
 
 const Profile = () => {
     const [originalProfile, setOriginalProfile] = useState(null);
@@ -105,6 +106,8 @@ const Profile = () => {
     };
 
     return (
+        <div>
+            <Navbar/>
         <div className="profile-container">
             <div className="profile-left">
                 <div className="profile-image-container">
@@ -249,6 +252,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
