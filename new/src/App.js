@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import BookList from './components/Book';
 import Login from './components/Login'; 
@@ -14,7 +13,7 @@ import Audio from './components/Audio';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-  const userId = localStorage.getItem('userId'); // Retrieve userId
+  const userId = localStorage.getItem('userId'); 
 
   return (
       <Router>

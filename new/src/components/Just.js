@@ -23,7 +23,7 @@ const BooksSearch = () => {
     'J.K. Rowling', 'Stephen King', 'Isaac Asimov', 'Agatha Christie', 'J.R.R. Tolkien', 'George R.R. Martin', 'Ernest Hemingway',
   ];
 
-  // Fetch favorites when the component mounts
+ 
   useEffect(() => {
     fetchFavorites();
   }, []);
@@ -103,16 +103,14 @@ const BooksSearch = () => {
     console.log('Book Data:', bookData);
   
     if (isFavorite(book.id)) {
-      // Remove from favorites
       const favoriteToRemove = favorites.find((fav) => fav.book.id === book.id);
-      if (!favoriteToRemove) return; // Ensure the favorite exists
+      if (!favoriteToRemove) return; 
 
       fetch(`http://localhost:5057/favorites/${favoriteToRemove._id}`, {
         method: 'DELETE',
       })
         .then((response) => response.json())
         .then(() => {
-          // Optimistically update the favorites state
           setFavorites((prevFavorites) =>
             prevFavorites.filter((fav) => fav.book.id !== book.id)
           );
@@ -122,7 +120,6 @@ const BooksSearch = () => {
           console.error('Error removing book from favorites:', error);
         });
     } else {
-      // Add to favorites
       fetch('http://localhost:5057/favorites', {
         method: 'POST',
         headers: {
@@ -135,7 +132,6 @@ const BooksSearch = () => {
       })
         .then((response) => response.json())
         .then((newFavorite) => {
-          // Optimistically update the favorites state
           setFavorites((prevFavorites) => [...prevFavorites, { book: bookData, _id: newFavorite._id }]);
           alert('Book added to favorites');
         })

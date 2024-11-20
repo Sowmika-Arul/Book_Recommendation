@@ -4,7 +4,7 @@
     padding: 20px;
     background-color: #f8f9fa;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
 }
 
@@ -12,27 +12,28 @@
     text-align: center;
     color: #333;
     margin-bottom: 20px;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 .feedback-item {
     background-color: white;
     margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 6px;
+    padding: 18px;
+    border-radius: 8px;
     border: 1px solid #ddd;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .feedback-item:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
 }
 
 .feedback-item h4 {
     color: #007bff;
-    margin: 0 0 10px 0;
+    margin: 0 0 8px;
     font-size: 20px;
     font-weight: 600;
 }
@@ -40,6 +41,7 @@
 .feedback-item p {
     color: #555;
     margin: 5px 0;
+    line-height: 1.5;
 }
 
 .feedback-item p:first-of-type {
@@ -48,6 +50,7 @@
 
 .feedback-item p:last-of-type {
     font-style: italic;
+    color: #888;
 }
 
 .feedback-rating {
@@ -56,13 +59,28 @@
     margin-right: 10px;
 }
 
-/* Filter Dropdown Styling */
+.feedback-date {
+    color: #888;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
 .filter-container {
-    text-align: right;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-#rating-filter {
+.filter-container label {
+    font-weight: 600;
+    color: #333;
+}
+
+#rating-filter,
+#search-term {
     padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -71,14 +89,28 @@
     color: #333;
     cursor: pointer;
     transition: border-color 0.3s ease;
+    margin-left: 10px;
 }
 
-#rating-filter:focus {
+#rating-filter:focus,
+#search-term:focus {
     outline: none;
     border-color: #007bff;
 }
 
-/* Responsive Design for Mobile Screens */
+
+#search-term {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+#search-term:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+
 @media (max-width: 600px) {
     .feedback-list-container {
         width: 100%;
@@ -86,7 +118,7 @@
     }
 
     .feedback-list-container h2 {
-        font-size: 22px;
+        font-size: 24px;
     }
 
     .feedback-item h4 {
@@ -94,18 +126,15 @@
     }
 
     .filter-container {
-        text-align: center;
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    #rating-filter {
+    #rating-filter,
+    #search-term {
         width: 100%;
         padding: 10px;
         font-size: 16px;
+        margin-top: 10px;
     }
-}
-
-.feedback-date {
-    color: #888;
-    font-size: 14px;
-    margin-top: 5px;
 }

@@ -131,11 +131,11 @@
   }
   
   .favorite-button.favorited {
-    color: gold; /* Change color to indicate the book is favorited */
+    color: gold; 
   }
   
   .favorite-button:not(.favorited) {
-    color: gray; /* Default color when not favorited */
+    color: gray; 
   }
   
   

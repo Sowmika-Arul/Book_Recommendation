@@ -1,4 +1,3 @@
-// src/Read.js
 
 import React, { useEffect, useState } from 'react';
 
@@ -15,7 +14,7 @@ const Read = () => {
     return (
         <div className="read-container">
             <h1>Book Content</h1>
-            <pre>{content}</pre> {/* Displaying content in preformatted text */}
+            <pre>{content}</pre> 
         </div>
     );
 };

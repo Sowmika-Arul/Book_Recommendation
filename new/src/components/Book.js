@@ -24,7 +24,6 @@ const BooksSearch = () => {
     'J.K. Rowling', 'Stephen King', 'Isaac Asimov', 'Agatha Christie', 'J.R.R. Tolkien', 'George R.R. Martin', 'Ernest Hemingway',
   ];
 
-  // Fetch favorites when the component mounts
   useEffect(() => {
     fetchFavorites();
   }, []);

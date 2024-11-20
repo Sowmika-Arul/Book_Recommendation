@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from './AuthContext'; // Import AuthContext for authentication
+import { useAuth } from './AuthContext'; 
 import './book.css';
 
 const BookList = () => {
@@ -7,19 +7,18 @@ const BookList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [favorites, setFavorites] = useState([]); // State to manage favorite books
-  const { user } = useAuth(); // Access the user from AuthContext
+  const [favorites, setFavorites] = useState([]); 
+  const { user } = useAuth(); 
 
   useEffect(() => {
-    // Fetch user's favorite books when component mounts or user changes
     const fetchFavorites = async () => {
       if (user) {
         try {
-          const token = localStorage.getItem('authToken'); // Get the token from local storage
+          const token = localStorage.getItem('authToken'); 
           const response = await fetch(`http://localhost:5057/api/favorites/${user}`, {
             method: 'GET',
             headers: {
-              'Authorization': `Bearer ${token}`, // Add token to headers
+              'Authorization': `Bearer ${token}`, 
             },
           });
 
@@ -28,7 +27,7 @@ const BookList = () => {
           }
 
           const data = await response.json();
-          setFavorites(data.map(book => book.bookId)); // Assuming bookId is unique for each book
+          setFavorites(data.map(book => book.bookId)); 
         } catch (error) {
           console.error('Error fetching favorites:', error);
         }
@@ -85,13 +84,13 @@ const BookList = () => {
     }
   
     try {
-      const token = localStorage.getItem('authToken'); // Get the token from local storage
+      const token = localStorage.getItem('authToken'); 
   
       const response = await fetch('http://localhost:5057/api/favorite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Add token to headers
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           userId: user,
@@ -108,7 +107,7 @@ const BookList = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
   
-      // Update favorites state after successful request
+  
       setFavorites(prevFavorites => [...prevFavorites, book.bookId]);
     } catch (error) {
       console.error('Error favoriting book:', error);
@@ -149,7 +148,7 @@ const BookList = () => {
                 })}
                 className={`favorite-button ${favorites.includes(book.book_id) ? 'favorited' : ''}`}
               >
-                &#9733; {/* Star symbol for favorite */}
+                &#9733;
               </button>
             </li>
           ))}
