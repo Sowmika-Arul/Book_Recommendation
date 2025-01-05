@@ -42,7 +42,7 @@ const FeedbackForm = () => {
         const currentDate = new Date().toISOString();  
         const updatedFormData = { ...formData, reviewDate: currentDate, userId };  
         try {
-            const response = await fetch('http://localhost:5057/api/feedback', {
+            const response = await fetch('https://book-recommendation-backend.onrender.com/api/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

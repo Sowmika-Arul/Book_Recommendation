@@ -29,7 +29,7 @@ const BooksSearch = () => {
   }, []);
 
   const fetchFavorites = () => {
-    fetch(`http://localhost:5057/favorites/${userId}`)
+    fetch(`https://book-recommendation-backend.onrender.com/favorites/${userId}`)
       .then((response) => response.json())
       .then((data) => {   console.log("Fetched favorites:", data); 
         setFavorites(data)})
@@ -106,7 +106,7 @@ const BooksSearch = () => {
       const favoriteToRemove = favorites.find((fav) => fav.book.id === book.id);
       if (!favoriteToRemove) return; 
 
-      fetch(`http://localhost:5057/favorites/${favoriteToRemove._id}`, {
+      fetch(`https://book-recommendation-backend.onrender.com/favorites/${favoriteToRemove._id}`, {
         method: 'DELETE',
       })
         .then((response) => response.json())
@@ -120,7 +120,7 @@ const BooksSearch = () => {
           console.error('Error removing book from favorites:', error);
         });
     } else {
-      fetch('http://localhost:5057/favorites', {
+      fetch('https://book-recommendation-backend.onrender.com/favorites', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const FeedbackList = () => {
         } else {
             const fetchFeedbacks = async () => {
                 try {
-                    const response = await fetch('http://localhost:5057/api/feedback');
+                    const response = await fetch('https://book-recommendation-backend.onrender.com/api/feedback');
                     if (response.ok) {
                         const data = await response.json();
                         setFeedbacks(data);

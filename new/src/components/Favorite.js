@@ -25,7 +25,7 @@ const FavoritesPage = () => {
       const fetchFavorites = async () => {
         try {
           setLoading(true);
-          const response = await fetch(`http://localhost:5057/favorites/${userId}`);
+          const response = await fetch(`https://book-recommendation-backend.onrender.com/favorites/${userId}`);
           if (!response.ok) {
             throw new Error('Failed to fetch favorites');
           }
@@ -44,7 +44,7 @@ const FavoritesPage = () => {
 
   const handleDelete = async (favoriteId) => {
     try {
-      const response = await fetch(`http://localhost:5057/favorites/${favoriteId}`, {
+      const response = await fetch(`https://book-recommendation-backend.onrender.com/favorites/${favoriteId}`, {
         method: 'DELETE',
       });
 

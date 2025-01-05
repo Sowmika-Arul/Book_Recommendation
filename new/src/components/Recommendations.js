@@ -12,7 +12,7 @@ const Recommendations = ({ userId }) => {
         const fetchRecommendations = async () => {
             try {
                 console.log('Fetching profile data for userId:', userId);
-                const res = await fetch(`http://localhost:5057/api/profile/${userId}`);
+                const res = await fetch(`https://book-recommendation-backend.onrender.com/api/profile/${userId}`);
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
@@ -42,7 +42,7 @@ const Recommendations = ({ userId }) => {
             webReaderLink: book.volumeInfo.infoLink || ''
         };
 
-        fetch('http://localhost:5057/favorites', {
+        fetch('https://book-recommendation-backend.onrender.com/favorites', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

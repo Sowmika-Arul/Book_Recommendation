@@ -23,8 +23,8 @@ function Login() {
     e.preventDefault();
    
     const endpoint = isLogin 
-      ? 'http://localhost:5057/api/auth/login' 
-      : 'http://localhost:5057/api/auth/signup';
+      ? 'https://book-recommendation-backend.onrender.com/api/auth/login' 
+      : 'https://book-recommendation-backend.onrender.com/api/auth/signup';
 
     try {
       

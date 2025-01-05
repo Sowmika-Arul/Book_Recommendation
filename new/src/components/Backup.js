@@ -15,7 +15,7 @@ const BookList = () => {
       if (user) {
         try {
           const token = localStorage.getItem('authToken'); 
-          const response = await fetch(`http://localhost:5057/api/favorites/${user}`, {
+          const response = await fetch(`https://book-recommendation-backend.onrender.com/api/favorites/${user}`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`, 
@@ -86,7 +86,7 @@ const BookList = () => {
     try {
       const token = localStorage.getItem('authToken'); 
   
-      const response = await fetch('http://localhost:5057/api/favorite', {
+      const response = await fetch('https://book-recommendation-backend.onrender.com/api/favorite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

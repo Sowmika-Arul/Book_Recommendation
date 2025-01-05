@@ -26,7 +26,7 @@ const Profile = () => {
         if (!userId) {
             navigate('/');
         } else {
-            fetch(`http://localhost:5057/api/profile/${userId}`)
+            fetch(`https://book-recommendation-backend.onrender.com/api/profile/${userId}`)
                 .then(res => res.json())
                 .then(data => {
                     const initialProfile = {
@@ -75,7 +75,7 @@ const Profile = () => {
     };
 
     const handleSaveChanges = () => {
-        fetch('http://localhost:5057/api/profile', {
+        fetch('https://book-recommendation-backend.onrender.com/api/profile', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

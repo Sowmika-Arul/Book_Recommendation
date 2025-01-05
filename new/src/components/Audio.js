@@ -14,7 +14,7 @@ const AudiobooksList = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5057/audiobooks')  
+      .get('https://book-recommendation-backend.onrender.com/audiobooks')  
       .then((response) => {
         console.log(response.data); 
         setAudiobooks(response.data.books || []);  
