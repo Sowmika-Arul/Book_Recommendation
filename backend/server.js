@@ -7,14 +7,14 @@ import feedbackRoutes from './routes/Feedback_routes.js';
 import userRoutes from './routes/User1.js';
 import favoriteRoutes from './routes/favoriteRoutes.js';
 import multer from 'multer';
-import fetch from 'node-fetch'; 
+import fetch from 'node-fetch';
 
 dotenv.config();
 
-// Ensure that MongoDB URL is set
+// Ensure required environment variables are set
 if (!process.env.MONGODB_URL) {
-    console.error('MONGODB_URL is not defined in the environment variables.');
-    process.exit(1);
+  console.error('MONGODB_URL is not defined in the environment variables.');
+  process.exit(1);
 }
 
 // Initialize Express app
@@ -22,10 +22,10 @@ const app = express();
 const PORT = process.env.PORT || 5057;
 const MONGO_URI = process.env.MONGODB_URL;
 
-// CORS configuration
+// CORS Configuration
 const allowedOrigins = [
-  'https://book-recommendation-frontend.onrender.com',  // Replace with your deployed URL
-  'http://localhost:3000',  // Localhost React app
+  'https://book-recommendation-frontend.onrender.com', // Deployed frontend URL
+  'http://localhost:3000',                            // Localhost React app
 ];
 
 const corsOptions = {
@@ -33,6 +33,7 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error(`Blocked by CORS: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -45,17 +46,21 @@ app.use(cors(corsOptions));
 // Middleware for file uploads
 const upload = multer({
   dest: 'uploads/',
-  limits: { fileSize: 5 * 1024 * 1024 },  // 5MB max
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max file size
 });
 
 // Middleware for parsing request bodies
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-// MongoDB connection
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// MongoDB Connection
+mongoose
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch(err => console.error('Error connecting to MongoDB Atlas:', err));
+  .catch(err => {
+    console.error('Error connecting to MongoDB Atlas:', err.message);
+    process.exit(1); // Exit on critical error
+  });
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -63,33 +68,37 @@ app.use('/api/feedback', feedbackRoutes);
 app.use('/api/profile', userRoutes);
 app.use('/favorites', favoriteRoutes);
 
-// Modify the API to accept pagination query parameters
+// Audiobooks API with Pagination
 app.get('/audiobooks', async (req, res) => {
-    const { page = 1, limit = 2000, search = '' } = req.query;
-    try {
-      const url = `https://librivox.org/api/feed/audiobooks/?title=${encodeURIComponent(search)}&limit=${limit}&page=${page}&format=json`;
-      const response = await fetch(url);
-      const data = await response.json();
-      res.json(data);  // Return data to frontend
-    } catch (error) {
-      console.error('Error fetching data from Librivox API:', error);
-      res.status(500).json({ error: 'Failed to fetch audiobooks data' });
+  const { page = 1, limit = 20, search = '' } = req.query; // Updated default limit to 20
+  try {
+    const url = `https://librivox.org/api/feed/audiobooks/?title=${encodeURIComponent(search)}&limit=${limit}&page=${page}&format=json`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Librivox API responded with status: ${response.status}`);
     }
-  });
-  
 
-// Handle 404 errors for undefined routes
-app.use((req, res, next) => {
-  res.status(404).send('Route not found');
+    const data = await response.json();
+    res.json(data); // Send API data to the client
+  } catch (error) {
+    console.error('Error fetching data from Librivox API:', error.message);
+    res.status(500).json({ error: 'Failed to fetch audiobooks data' });
+  }
 });
 
-// General error handler
+// Handle 404 Errors for Undefined Routes
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
+// General Error Handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
+  console.error('Error:', err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// Start the server
+// Start the Server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
