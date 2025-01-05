@@ -24,7 +24,7 @@ const MONGO_URI = process.env.MONGODB_URL;
 
 // CORS configuration
 const allowedOrigins = [
-  'https://ink-z331.onrender.com',  // Replace with your deployed URL
+  'https://book-recommendation-frontend.onrender.com',  // Replace with your deployed URL
   'http://localhost:3000',  // Localhost React app
 ];
 
